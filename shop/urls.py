@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 import debug_toolbar
 from shop import views
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     #path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    path('user/', views.user_list),
-    path('user/<int:pk>/', views.user_detail),
+    path('user/', views.UserList.as_view()),
+    path('user/<int:pk>/', views.UserDetail.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
