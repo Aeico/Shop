@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework import status
 
 class UserList(APIView):
-
     #Change from all to only retrieve one
     def get(self, request, format=None):
         users = User.objects.all()
