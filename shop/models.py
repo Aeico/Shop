@@ -2,7 +2,8 @@ from django.db import models
 
 #User model linked with cart and order history
 class User(models.Model):
-    id = models.IntegerField(primary_key=True)
+    user_id = models.IntegerField(primary_key=True, max_length=20)
     name = models.CharField(max_length=100)
-    cart = models.IntegerField()
-    order_history = models.IntegerField()
+
+#class OrderHistory(models.Model):
+#    id = models.ForeignKey()
