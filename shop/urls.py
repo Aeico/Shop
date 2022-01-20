@@ -21,10 +21,11 @@ from shop import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
     path('user/', views.UserList.as_view()),
     path('user/<int:pk>/', views.UserDetail.as_view()),
+    path('item/', views.Item.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
