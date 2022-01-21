@@ -10,7 +10,7 @@ class Item(models.Model):
     fk_author = models.ForeignKey(User,null=False,on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=255)
-    prices = models.IntegerField(null=False)
+    price = models.IntegerField(null=False)
 
 class Order(models.Model):
     order_id = models.IntegerField(primary_key=True)

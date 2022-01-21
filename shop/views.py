@@ -1,4 +1,4 @@
-from shop.models import User
+from shop.models import Item, User
 from shop.serializers import UserSerializer, ItemSerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -52,3 +52,20 @@ class ItemDetail(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ItemsOfUser(APIView):
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def get(self, request, pk, format=None,):
+        items = Item.objects.all()
+        correct_items = set()
+        for item in items:
+            if item.fk_author.user_id == pk:
+                correct_items.add(item)
+
+        serializer = ItemSerializer(correct_items, many=True)
+        return Response(serializer.data)
