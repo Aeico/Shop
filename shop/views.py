@@ -45,7 +45,7 @@ class UserDetail(APIView):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class Item(APIView):
+class ItemDetail(APIView):
     def post(self, request, format=None):
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():

@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ['item_id','author','name','description','price']
+        fields = ['item_id','fk_author','name','description','price']
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:

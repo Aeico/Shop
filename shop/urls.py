@@ -25,7 +25,7 @@ urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),
     path('user/', views.UserList.as_view()),
     path('user/<int:pk>/', views.UserDetail.as_view()),
-    path('item/', views.Item.as_view()),
+    path('item/', views.ItemDetail.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
