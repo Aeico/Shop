@@ -26,6 +26,7 @@ urlpatterns = [
     path('user/', views.UserList.as_view()),
     path('user/<int:pk>/', views.UserDetail.as_view()),
     path('item/', views.ItemDetail.as_view()),
+    path('items_of_user/<int:pk>', views.ItemsOfUser.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
