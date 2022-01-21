@@ -16,13 +16,11 @@ Including another URLconf
 from django import views
 from django.contrib import admin
 from django.urls import path, include
-import debug_toolbar
 from shop import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('__debug__/', include(debug_toolbar.urls)),
     path('user/', views.UserList.as_view()),
     path('user/<int:pk>/', views.UserDetail.as_view()),
     path('item/', views.ItemDetail.as_view()),
