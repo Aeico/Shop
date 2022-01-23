@@ -2,11 +2,14 @@ import '../App.css';
 import axios from "axios";
 import React, { Component } from "react";
 
+//http://127.0.0.1:8000/user/1
+//https://joakimjlsv.pythonanywhere.com/user/1/
+
 export function GetUser() {
     const [get, setGet] = React.useState(null);
 
     React.useEffect(() => {
-        axios.get('http://127.0.0.1:8000/user/1')
+        axios.get('https://joakimjlsv.pythonanywhere.com/user/1/')
             .then((response) => {
                 setGet(response.data)
             });
