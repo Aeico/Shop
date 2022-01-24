@@ -9,7 +9,7 @@ export function GetUser() {
     const [get, setGet] = React.useState(null);
 
     React.useEffect(() => {
-        axios.get('https://joakimjlsv.pythonanywhere.com/user/1/')
+        axios.get('http://127.0.0.1:8000/user/1')
             .then((response) => {
                 setGet(response.data)
             });
@@ -18,9 +18,9 @@ export function GetUser() {
     if (!get) return null;
 
     return (
-        <div>
-            <h1>user id: {get.user_id}</h1>
-            <h1>name: {get.name}</h1>
+        <div className='User'>
+            <h1>Hello {get.name}!</h1>
+            <p>Your "Nothings": {get.currency}</p>
         </div>
     )
 }
