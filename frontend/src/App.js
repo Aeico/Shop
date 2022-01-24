@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import GetUser from './Components/GetUser';
 
@@ -12,11 +11,14 @@ function Nav() {
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <nav className="Nav"><Nav/></nav>
       <header className="App-header">
       <GetUser/>
       </header>
+      <h1 className="text-blue-500 text-ellipsis text-center">
+      Hello world!
+      </h1>
       <footer>
         
       </footer>
