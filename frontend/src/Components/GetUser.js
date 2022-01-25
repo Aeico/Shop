@@ -6,23 +6,21 @@ import React, { Component } from "react";
 //https://joakimjlsv.pythonanywhere.com/user/1/
 
 export function GetUser() {
-    const [get, setGet] = React.useState(null);
+  const [get, setGet] = React.useState(null);
+  React.useEffect(() => {
+    axios.get('http://127.0.0.1:8000/user/1')
+      .then((response) => {
+        setGet(response.data)
+      });
+  }, []);
 
-    React.useEffect(() => {
-        axios.get('http://127.0.0.1:8000/user/1')
-            .then((response) => {
-                setGet(response.data)
-            });
-    }, []);
-
-    if (!get) return null;
-
-    return (
-        <div className='User'>
-            <h1>Hello {get.name}!</h1>
-            <p>Your "Nothings": {get.currency}</p>
-        </div>
-    )
+  if (!get) return null;
+  return (
+    <div className='h-fit pl-6 pr-3 bg-orange-700 pt-4'>
+      <p>Hello {get.name}!</p>
+      <p className='pt-3'>Your "Nothings": {get.currency}</p>
+    </div>
+  )
 }
 
 export default GetUser;
