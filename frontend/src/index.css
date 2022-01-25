@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .nav-text {
+        @apply relative flex mx-auto bg-orange-700 rounded-3xl px-3 pb-1
+        hover:bg-orange-500 shadow-lg hover:rounded-xl
+        transition-all duration-300 ease-linear;
+    }
+}
