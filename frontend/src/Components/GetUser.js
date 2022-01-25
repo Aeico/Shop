@@ -16,9 +16,9 @@ export function GetUser() {
 
   if (!get) return null;
   return (
-    <div className='h-fit pl-6 pr-3 bg-orange-700 pt-4'>
+    <div className='h-full w-full p-6 bg-orange-700 items-center text-3xl shadow-lg'>
       <p>Hello {get.name}!</p>
-      <p className='pt-3'>Your "Nothings": {get.currency}</p>
+      <p className='pt-5'>Your ♦: {get.currency}</p>
     </div>
   )
 }
