@@ -51,7 +51,6 @@ function App() {
           <div className='h-fit w-6/6 grid grid-flow-row-dense grid-cols-5 grid-rows-4 justify-center '> {/* Needs to dynamically adjust grids */}
             <div className='col-span-1 grid-rows-2'>
               <GetUser className='col-span-1 grid-rows-1' />
-
             </div>
             <Items className='col-span-1 grid-rows-1'></Items>
             <Items className='col-span-1 grid-rows-1'></Items>

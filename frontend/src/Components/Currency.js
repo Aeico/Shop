@@ -1,19 +1,19 @@
 import React, { useRef } from 'react'
-import { useFrame, Canvas, useGLTF } from '@react-three/fiber'
-
-//    <mesh geometry={nodes.Cube.geometry} material={materials.Cube} />
-//    <mesh geometry={nodes.Sphere.geometry} material={materials.Sphere} position={[0, 1.31, 0]} />
+import { useFrame, useLoader } from '@react-three/fiber'
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 function Currency(props) {
-  const mesh = useRef()
-  //const { nodes, materials } = useGLTF('../models/test2.glb')
-  useFrame((state, delta) => (mesh.current.rotation.x += 0.001, mesh.current.rotation.y += 0.002))
+
+  const group = useRef()
+  const { nodes, materials } = useLoader(GLTFLoader,'../models/0Coin.glb')
+
+  useFrame(() => (group.current.rotation.z += 0.003))
   return (
-        <mesh  {...props} ref={mesh}>
-          <boxGeometry />
-          <meshStandardMaterial />
-        </mesh>
-  )
+    <group ref={group} {...props} rotation={[90,0,0]} onClick={(event) => console.log("hi")}>
+      <mesh geometry={nodes.Coin.geometry} material={materials.Coin} />
+      <mesh geometry={nodes.Zero.geometry} material={materials.Zero} />
+    </group>
+  ) 
 }
 
 export default Currency;

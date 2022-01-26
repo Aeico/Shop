@@ -21,11 +21,11 @@ export function GetUser() {
     <div className='h-full w-full p-6 bg-orange-700 items-center text-3xl shadow-lg'>
       <p>Hello {get.name}!</p>
       <div className='pt-5 inline-flex'>Your
-        <div className='w-16 h-16 inline-flex pb-3'>
-          <Canvas camera={{ position: [0, 0, 1.5] }}>
+        <div className='w-20 h-20 inline-flex pb-3'>
+          <Canvas camera={{ position: [0, 0, 2] }}>
             <ambientLight intensity={0.2} />
-            <directionalLight color="blue" position={[0, 0, 5]}  />
-            <Currency></Currency>
+            <directionalLight color="white" position={[0, 0, 5]}  />
+            <Currency />
           </Canvas>
         </div>
         : {get.currency}
