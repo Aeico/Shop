@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useRef, Suspense } from 'react';
 import './App.css';
 import GetUser from './Components/GetUser';
 import Items from './Components/Items';
+
 
 function NavBar() {
   return (
@@ -40,27 +41,32 @@ function App() {
   useEffect(() => {
     // Update the document title using the browser API
     document.title = window.innerWidth;
+    console.log(window.innerWidth);
   });
 
   return (
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
-      <div className='h-fit w-full mt-16 top-0 absolute'>
-        <div className='h-fit w-6/6 grid grid-flow-row-dense grid-cols-8 grid-rows-6'>
-          <div className='col-span-1 grid-rows-2'>
-          <GetUser className='col-span-1' />
+      <Suspense fallback={null}>
+        <div className='h-fit w-full mt-16 top-0 absolute'>
+          <div className='h-fit w-6/6 grid grid-flow-row-dense grid-cols-8 grid-rows-6 justify-center '>
+            <div className='col-span-1 grid-rows-2'>
+              <GetUser className='col-span-1 grid-rows-1' />
+
+            </div>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
+            <Items className='col-span-1 grid-rows-1'></Items>
           </div>
-          <Items className='col-span-1'></Items>
-          <Items className='col-span-1'></Items>
-          <Items className='col-span-1'></Items>
-          <Items className='col-span-1'></Items>
-          <Items className='col-span-1'></Items>
-          <Items className='col-span-1'></Items>
-          <Items className='col-span-1'></Items>
-          <Items className='col-span-1'></Items>
         </div>
-      </div>
-      <NavBar></NavBar>
-      <Footer />
+        <NavBar></NavBar>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
