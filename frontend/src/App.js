@@ -48,7 +48,7 @@ function App() {
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
       <Suspense fallback={null}>
         <div className='h-fit w-full mt-16 top-0 absolute'>
-          <div className='h-fit w-6/6 grid grid-flow-row-dense grid-cols-8 grid-rows-6 justify-center '>
+          <div className='h-fit w-6/6 grid grid-flow-row-dense grid-cols-5 grid-rows-4 justify-center '> {/* Needs to dynamically adjust grids */}
             <div className='col-span-1 grid-rows-2'>
               <GetUser className='col-span-1 grid-rows-1' />
 
