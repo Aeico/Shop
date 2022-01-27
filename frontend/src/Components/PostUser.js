@@ -11,7 +11,7 @@ export function PostUser(props) {
   const [post, setPost] = React.useState(null);
   const user = { user_id: props.user_id, name: props.name, currency: props.currency }
   React.useEffect(() => {
-    axios.post('http://127.0.0.1:8000/user/1', user)
+    axios.post('http://127.0.0.1:8000/user/1/', user)
       .then((response) => {
         setPost(response.data)
       });

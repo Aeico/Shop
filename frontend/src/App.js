@@ -26,7 +26,7 @@ function NavBar() {
 function NavText({ text }) {
   return (
     //onClick={(e) => PostUser(GetUser.get.user_id, GetUser.get.name, GetUser.get.currency)}
-    <button  className='nav-text'>{text}</button>
+    <button  className='nav-text font-bold'>{text}</button>
   )
 }
 
@@ -48,7 +48,7 @@ function App() {
   const itemIndex = 0;
 
   if (get) {
-  var items = get.map(item => <Items className='col-span-1 grid-rows-1'
+  var items = get.map(item => <Items key={item.item_id} className='col-span-1 grid-rows-1'
   name={item.name} description={item.description} price={item.price}>
   </Items>)
   }
