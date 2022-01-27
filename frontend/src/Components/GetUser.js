@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { Component, useState, useRef, Suspense } from "react";
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import Currency from './Currency';
+import Cart from './Cart';
 
 //http://127.0.0.1:8000/user/1
 //https://joakimjlsv.pythonanywhere.com/user/1/
@@ -16,12 +17,16 @@ export function GetUser() {
       });
   }, []);
 
+  const ClickedCart = (e) => {
+    console.log(e);
+  }
+
   if (!get) return <p>Loading</p>;
   return (
     <div className='h-full w-full p-6 bg-orange-700 items-center text-3xl shadow-lg'>
       <p>Hello {get.name}!</p>
-      <div className='pt-5 inline-flex'>Your
-        <div className='w-20 h-20 inline-flex pb-3'>
+      <div className='pt-5 inline-flex items-center'>Your
+        <div className='w-20 h-20 inline-flex pt-1'>
           <Canvas camera={{ position: [0, 0, 2] }}>
             <ambientLight intensity={0.2} />
             <directionalLight color="white" position={[0, 0, 5]}  />
@@ -30,6 +35,11 @@ export function GetUser() {
         </div>
         : {get.currency}
       </div>
+      <div className='group'>
+        <button onClick={ClickedCart} className='bg-gray-500 rounded-3xl p-2 font-bold'>Your cart</button>
+        <Cart></Cart>
+      </div>
+      
     </div>
   )
 }

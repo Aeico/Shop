@@ -2,7 +2,8 @@ import React, { useEffect, useLayoutEffect, useState, useRef, Suspense } from 'r
 import './App.css';
 import GetUser from './Components/GetUser';
 import Items from './Components/Items';
-
+import PostUser from './Components/PostUser';
+import axios from "axios";
 
 function NavBar() {
   return (
@@ -12,7 +13,7 @@ function NavBar() {
           <NavText text="Nothing Shop" />
         </div>
         <div className='flex items-center justify-center space-x-6'>
-          <NavText text="Buy" />
+          <NavText text="Get Currency" />
           <NavText text="Create Item" />
           <NavText text="Order History" />
           <NavText text="Your Items" />
@@ -24,7 +25,8 @@ function NavBar() {
 
 function NavText({ text }) {
   return (
-    <li className='nav-text'>{text}</li>
+    //onClick={(e) => PostUser(GetUser.get.user_id, GetUser.get.name, GetUser.get.currency)}
+    <button  className='nav-text'>{text}</button>
   )
 }
 
@@ -35,11 +37,23 @@ function Footer() {
 }
 
 function App() {
-  const [count, setCount] = useState(0);
 
-  // Similar to componentDidMount and componentDidUpdate:
+  const [get, setGet] = React.useState(null);
+  React.useEffect(() => {
+    axios.get('http://127.0.0.1:8000/item')
+      .then((response) => {
+        setGet(response.data)
+      });
+  }, []);
+  const itemIndex = 0;
+
+  if (get) {
+  var items = get.map(item => <Items className='col-span-1 grid-rows-1'
+  name={item.name} description={item.description} price={item.price}>
+  </Items>)
+  }
+
   useEffect(() => {
-    // Update the document title using the browser API
     document.title = window.innerWidth;
     console.log(window.innerWidth);
   });
@@ -52,15 +66,7 @@ function App() {
             <div className='col-span-1 grid-rows-2'>
               <GetUser className='col-span-1 grid-rows-1' />
             </div>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
-            <Items className='col-span-1 grid-rows-1'></Items>
+            {items}
           </div>
         </div>
         <NavBar></NavBar>

@@ -8,4 +8,16 @@
         hover:bg-orange-500 shadow-lg hover:rounded-xl
         transition-all duration-300 ease-linear top-0;
     }
+
+    .buy-popup {
+        @apply absolute w-auto h-10 bg-white rounded-3xl shadow-md
+        text-gray-800 text-xs p-2 font-bold
+        transition-all duration-150 scale-0 origin-top;
+    }
+
+    .cart-popup {
+        @apply absolute w-auto h-10 bg-white rounded-3xl shadow-md
+        text-gray-800 text-3xl pb-4 px-4  font-bold m-3
+        transition-all duration-150 scale-0 origin-top;
+    }
 }
