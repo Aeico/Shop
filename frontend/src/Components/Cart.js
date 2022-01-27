@@ -2,9 +2,9 @@ import '../App.css';
 import axios from "axios";
 import React from "react";
 
-export function Cart() {
+export function Cart({CartClass, Text}) {
     return (
-      <div className='cart-popup'>The cart
+      <div className={CartClass}> {Text}
 
       </div>
     )

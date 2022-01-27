@@ -1,6 +1,6 @@
 import '../App.css';
 import axios from "axios";
-import React, { Component, useState, useRef, Suspense } from "react";
+import React, { Component, useState, useRef, Suspense, useEffect } from "react";
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import Currency from './Currency';
 import Cart from './Cart';
@@ -9,17 +9,25 @@ import Cart from './Cart';
 //https://joakimjlsv.pythonanywhere.com/user/1/
 
 export function GetUser() {
+  var cartClass = 'cart-popup';
   const [get, setGet] = React.useState(null);
   React.useEffect(() => {
-    axios.get('http://127.0.0.1:8000/user/1')
+    axios.get('http://127.0.0.1:8000/user/1/')
       .then((response) => {
         setGet(response.data)
       });
   }, []);
 
-  const ClickedCart = (e) => {
-    console.log(e);
+  var cart = <Cart Text={'Please'} CartClass={cartClass}></Cart>
+
+  const ClickedCart = () => {
+    cart = <Cart Text={'Work'} CartClass={'cart-popup scale-100 bg-red-500'}></Cart>
+    console.log("Hiiiiii")
   }
+
+  useEffect(() => {
+    cart = <Cart Text={'Work'} CartClass={'cart-popup scale-100 bg-red-500'}></Cart>
+  });
 
   if (!get) return <p>Loading</p>;
   return (
@@ -37,7 +45,7 @@ export function GetUser() {
       </div>
       <div className='group'>
         <button onClick={ClickedCart} className='bg-gray-500 rounded-3xl p-2 font-bold'>Your cart</button>
-        <Cart></Cart>
+        {cart}
       </div>
       
     </div>
