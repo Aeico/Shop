@@ -37,7 +37,6 @@ function Footer() {
 }
 
 function App() {
-
   const [get, setGet] = React.useState(null);
   React.useEffect(() => {
     axios.get('http://127.0.0.1:8000/item')
@@ -45,7 +44,6 @@ function App() {
         setGet(response.data)
       });
   }, []);
-  const itemIndex = 0;
 
   if (get) {
   var items = get.map(item => <Items key={item.item_id} className='col-span-1 grid-rows-1'
@@ -53,10 +51,11 @@ function App() {
   </Items>)
   }
 
-  useEffect(() => {
-    document.title = window.innerWidth;
-    console.log(window.innerWidth);
-  });
+  const [cartToggled, setcartToggled] = useState(false);
+
+  const cartClicked = () => {
+    cartToggled ? setcartToggled(false) : setcartToggled(true)
+  }
 
   return (
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
@@ -64,7 +63,7 @@ function App() {
         <div className='h-fit w-full mt-16 top-0 absolute'>
           <div className='h-fit w-6/6 grid grid-flow-row-dense grid-cols-5 grid-rows-4 justify-center '> {/* Needs to dynamically adjust grids */}
             <div className='col-span-1 grid-rows-2'>
-              <GetUser className='col-span-1 grid-rows-1' />
+              <GetUser className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} />
             </div>
             {items}
           </div>
