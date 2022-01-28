@@ -1,15 +1,14 @@
 import '../App.css';
 import axios from "axios";
-import React, { Component, useState, useRef, Suspense, useEffect } from "react";
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import React from "react";
+import { Canvas} from '@react-three/fiber'
 import Currency from './Currency';
 import Cart from './Cart';
 
 //http://127.0.0.1:8000/user/1
 //https://joakimjlsv.pythonanywhere.com/user/1/
 
-export function GetUser() {
-  var cartClass = 'cart-popup';
+export function GetUser({ cartClicked, cartToggled }) {
   const [get, setGet] = React.useState(null);
   React.useEffect(() => {
     axios.get('http://127.0.0.1:8000/user/1/')
@@ -18,16 +17,7 @@ export function GetUser() {
       });
   }, []);
 
-  var cart = <Cart Text={'Please'} CartClass={cartClass}></Cart>
-
-  const ClickedCart = () => {
-    cart = <Cart Text={'Work'} CartClass={'cart-popup scale-100 bg-red-500'}></Cart>
-    console.log("Hiiiiii")
-  }
-
-  useEffect(() => {
-    cart = <Cart Text={'Work'} CartClass={'cart-popup scale-100 bg-red-500'}></Cart>
-  });
+  var cart = <div className={cartToggled ? 'cart-popup '+ 'scale-100':'cart-popup '+ 'scale-0' }>It Wont</div>
 
   if (!get) return <p>Loading</p>;
   return (
@@ -44,10 +34,9 @@ export function GetUser() {
         : {get.currency}
       </div>
       <div className='group'>
-        <button onClick={ClickedCart} className='bg-gray-500 rounded-3xl p-2 font-bold'>Your cart</button>
+        <button onClick={cartClicked} key={cartToggled} className='bg-gray-300 rounded-3xl p-2 font-bold'>Your cart</button>
         {cart}
       </div>
-      
     </div>
   )
 }

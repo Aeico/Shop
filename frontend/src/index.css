@@ -17,7 +17,7 @@
 
     .cart-popup {
         @apply absolute w-auto h-10 bg-white rounded-3xl shadow-md
-        text-gray-800 text-3xl pb-4 px-4  font-bold m-3
+        text-gray-800 text-3xl pb-4 px-4 font-bold m-3
         transition-all duration-150 scale-150 origin-top;
     }
 }
