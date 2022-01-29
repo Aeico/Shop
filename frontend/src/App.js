@@ -63,23 +63,18 @@ function App() {
 
   React.useEffect(() => {
     if (getCur) {
-
-      var json = JSON.stringify({ user_id: getCur.user_id, name: getCur.name, 
-        currency: getCur.currency + 100 })
-        console.log(json)
-      axios.post("http://127.0.0.1:8000/user/", json, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      axios.put("http://127.0.0.1:8000/user/1/", getCur)
         .then((response) => {
           setGetCur(response.data)
         });
     }
-  }, [getCur]);
+  }, [postCount]);
+
+  var postCount = 0;
 
   const postClick = () => {
     setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 100 })
+    postCount++;
   }
 
   if (get) {
