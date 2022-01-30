@@ -5,7 +5,7 @@ import Items from './Components/Items';
 import PostUser from './Components/PostUser';
 import axios from "axios";
 
-function NavBar({ postClick }) {
+function NavBar({ postClick, selfItems }) {
   return (
     <div className='bg-orange-800 shadow-lg'>
       <ul className='flex h-16 w-screen justify-center items-center shadow-lg'>
@@ -16,16 +16,12 @@ function NavBar({ postClick }) {
           <NavText postClick={postClick} text="Get Currency" />
           <NavText text="Create Item" />
           <NavText text="Order History" />
-          <NavText text="Your Items" />
+          <button onClick={selfItems} className='nav-text font-bold'>Your Items</button>
         </div>
       </ul>
     </div>
   )
 }
-
-
-
-
 
 function NavText({ text, postClick }) {
   return (
@@ -45,13 +41,26 @@ var cartInfo = {
 }
 
 function App() {
+  const [userItems, setUserItems] = useState(false)
+
+  const selfItems = () => {
+    if (userItems ? setUserItems(false) : setUserItems(true));
+  }
+
   const [get, setGet] = React.useState(null);
   React.useEffect(() => {
+    if (!userItems) {
     axios.get('http://127.0.0.1:8000/item')
       .then((response) => {
         setGet(response.data)
       });
-  }, []);
+    } else {
+      axios.get('http://127.0.0.1:8000/item/'+getCur.user_id+'/')
+      .then((response) => {
+        setGet(response.data)
+      });
+    }
+  }, [userItems]);
 
   const [getCur, setGetCur] = React.useState(null);
   React.useEffect(() => {
@@ -60,6 +69,8 @@ function App() {
         setGetCur(response.data)
       });
   }, []);
+
+  const [postCount, setPostCount] = useState(0)
 
   React.useEffect(() => {
     if (getCur) {
@@ -70,11 +81,9 @@ function App() {
     }
   }, [postCount]);
 
-  var postCount = 0;
-
   const postClick = () => {
-    setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 100 })
-    postCount++;
+    setPostCount(postCount+1);
+    setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 100 });
   }
 
   if (get) {
@@ -100,7 +109,7 @@ function App() {
             {items}
           </div>
         </div>
-        <NavBar postClick={postClick}></NavBar>
+        <NavBar postClick={postClick} selfItems={selfItems}></NavBar>
         <Footer />
       </Suspense>
     </div>

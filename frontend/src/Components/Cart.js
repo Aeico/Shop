@@ -5,7 +5,7 @@ export function Cart({ cartInfo, cartClassName }) {
     return (
       <div className={cartClassName}>
        <h1>{cartInfo.name}</h1>
-       <p>{cartInfo.quantity}</p>
+       <p>{""+cartInfo.quantity}</p>
       </div>
     )
   }

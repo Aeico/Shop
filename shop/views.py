@@ -66,6 +66,6 @@ class ItemsOfUser(APIView):
             raise Http404
 
     def get(self, request, pk, format=None,):
-        items = Item.objects.filter(fk_author=pk)
+        items = Item.objects.filter(author_fk=pk)
         serializer = ItemSerializer(items, many=True)
         return Response(serializer.data)
