@@ -16,7 +16,6 @@ function NavBar({ postClick, selfItems }) {
           <NavText postClick={postClick} text="Get Currency" />
           <NavText text="Create Item" />
           <NavText text="Order History" />
-          <NavText selfItems={selfItems} text="Your Items" />
           <button onClick={selfItems} className='nav-text font-bold'>Your Items</button>
         </div>
       </ul>
