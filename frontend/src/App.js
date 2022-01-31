@@ -37,10 +37,30 @@ function Footer() {
 
 var cartInfo = {
   name: "Item Name",
-  quantity: 1
+  quantity: 10
 }
 
 function App() {
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('h-fit w-6/6 grid grid-flow-row-dense grid-cols-10 grid-rows-10 justify-center')
+
+  const [curWidth, setCurWidth] = useState(window.innerWidth)
+  const [curHeight, setCurHeight] = useState(window.innerHeight)
+
+  const checkWindow = () => {
+    setCurWidth(window.innerWidth)
+    setCurHeight(window.innerHeight)
+    var width = Math.round(window.innerWidth/300)
+    if (width >= 8) {
+      width = 7
+    }
+    var height = Math.round(window.innerHeight/300)
+    setItemsWindowTailwind('h-fit w-6/6 grid grid-flow-row-dense grid-cols-'+ width +' grid-rows-' + height + ' justify-center')
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', checkWindow)
+  }, []);
+
   const [userItems, setUserItems] = useState(false)
 
   const selfItems = () => {
@@ -102,7 +122,7 @@ function App() {
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
       <Suspense fallback={null}>
         <div className='h-fit w-full mt-16 top-0 absolute'>
-          <div className='h-fit w-6/6 grid grid-flow-row-dense grid-cols-5 grid-rows-4 justify-center '> {/* Needs to dynamically adjust grids */}
+          <div className={itemsWindowTailwind}> {/* Needs to dynamically adjust grids */}
             <div className='col-span-1 grid-rows-2'>
               <GetUser getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} />
             </div>
