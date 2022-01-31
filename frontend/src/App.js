@@ -35,13 +35,20 @@ function Footer() {
   )
 }
 
-var cartInfo = {
-  name: "Item Name",
-  quantity: 10
-}
-
 function App() {
-  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('h-fit w-6/6 grid grid-flow-row-dense grid-cols-10 grid-rows-10 justify-center')
+  const [cartInfo, setCartInfo] = useState({name: "Item Name",
+  quantity: 10})
+
+  useEffect(() => {
+    console.log("changed")
+  }, [cartInfo]);
+
+  var preWidth = Math.round((100+window.innerWidth)/300)
+    if (preWidth >= 8) {
+      preWidth = 7
+    }
+  var preHeight = Math.round((window.innerHeight-100)/300)
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('h-fit w-6/6 grid grid-flow-row-dense grid-cols-'+ preWidth +' grid-rows-' + preHeight + ' justify-center')
 
   const [curWidth, setCurWidth] = useState(window.innerWidth)
   const [curHeight, setCurHeight] = useState(window.innerHeight)
@@ -49,11 +56,11 @@ function App() {
   const checkWindow = () => {
     setCurWidth(window.innerWidth)
     setCurHeight(window.innerHeight)
-    var width = Math.round(window.innerWidth/300)
+    var width = Math.round((100+window.innerWidth)/300)
     if (width >= 8) {
       width = 7
     }
-    var height = Math.round(window.innerHeight/300)
+    var height = Math.round((window.innerHeight-100)/300)
     setItemsWindowTailwind('h-fit w-6/6 grid grid-flow-row-dense grid-cols-'+ width +' grid-rows-' + height + ' justify-center')
   }
 
@@ -124,7 +131,7 @@ function App() {
         <div className='h-fit w-full mt-16 top-0 absolute'>
           <div className={itemsWindowTailwind}> {/* Needs to dynamically adjust grids */}
             <div className='col-span-1 grid-rows-2'>
-              <GetUser getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} />
+              <GetUser getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} />
             </div>
             {items}
           </div>
