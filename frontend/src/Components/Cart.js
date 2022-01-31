@@ -3,9 +3,8 @@ import React from "react";
 
 export function Cart({ cartInfo, cartClassName }) {
     return (
-      <div className={cartClassName}>
-       <h1>{cartInfo.name}</h1>
-       <p>{""+cartInfo.quantity}</p>
+      <div className={cartClassName + 'justify-center'}>
+       {cartInfo.name} <br/> <button>-</button>{cartInfo.quantity}<button>+</button>
       </div>
     )
   }
