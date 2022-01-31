@@ -8,10 +8,10 @@ import Cart from './Cart';
 //http://127.0.0.1:8000/user/1
 //https://joakimjlsv.pythonanywhere.com/user/1/
 
-export function GetUser({ cartClicked, cartToggled, cartInfo, getCur }) {
+export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInfo }) {
   var cartClassName = cartToggled ? 'cart-popup scale-100':'cart-popup scale-0'
 
-  var cart = <Cart cartInfo={cartInfo} cartClassName={cartClassName}></Cart>
+  var cart = <Cart cartInfo={cartInfo} cartClassName={cartClassName} setCartInfo={setCartInfo}></Cart>
 
   if (!getCur) return <p>Loading</p>;
   return (
