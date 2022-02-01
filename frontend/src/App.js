@@ -3,9 +3,10 @@ import './App.css';
 import GetUser from './Components/GetUser';
 import Items from './Components/Items';
 import PostUser from './Components/PostUser';
+import ItemForm from './Components/ItemForm';
 import axios from "axios";
 
-function NavBar({ postClick, selfItems }) {
+function NavBar({ postClick, selfItems, createItem }) {
   return (
     <div className='bg-orange-800 shadow-lg'>
       <ul className='flex h-16 w-screen justify-center items-center shadow-lg'>
@@ -13,19 +14,29 @@ function NavBar({ postClick, selfItems }) {
           <NavText text="Nothing Shop" />
         </div>
         <div className='flex items-center justify-center space-x-6'>
-          <NavText postClick={postClick} text="Get Currency" />
-          <NavText text="Create Item" />
-          <NavText text="Order History" />
-          <button onClick={selfItems} className='nav-text font-bold'>Your Items</button>
+          <NavText buttonPressed={postClick} text="Get Currency" />
+          <CreateItem buttonPressed={createItem} />
+          <NavText buttonPressed={selfItems} text="Order History" />
+          <NavText buttonPressed={selfItems} text="Your Items" />
         </div>
       </ul>
     </div>
   )
 }
 
-function NavText({ text, postClick }) {
+function CreateItem({ buttonPressed }) {
   return (
-    <button onClick={postClick} className='nav-text font-bold'>{text}</button>
+    <div>
+      <button onClick={buttonPressed} className='nav-text'>Create Item</button>
+      <ItemForm />
+    </div>
+  )
+}
+
+
+function NavText({ text, buttonPressed }) {
+  return (
+    <button onClick={buttonPressed} className='nav-text'>{text}</button>
   )
 }
 
@@ -36,27 +47,26 @@ function Footer() {
 }
 
 function App() {
+
+  const createItem = () => {
+    return (<div>Hello</div>)
+  }
+
   const [cartInfo, setCartInfo] = useState({name: "Item Name",
   quantity: 10})
 
   useEffect(() => {
-    console.log("changed")
+
   }, [cartInfo]);
 
-  var preWidth = Math.round((100+window.innerWidth)/300)
-    if (preWidth >= 8) {
-      preWidth = 7
-    }
-  var preHeight = Math.round((window.innerHeight-100)/300)
-  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('h-fit w-6/6 grid grid-flow-row-dense grid-cols-'+ preWidth +' grid-rows-' + preHeight + ' justify-center')
-
-  const [curWidth, setCurWidth] = useState(window.innerWidth)
-  const [curHeight, setCurHeight] = useState(window.innerHeight)
+  var preWidth = Math.round((window.innerWidth)/300)
+  if (preWidth >= 8) {
+    preWidth = 7
+  }
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-'+preWidth)
 
   const checkWindow = () => {
-    setCurWidth(window.innerWidth)
-    setCurHeight(window.innerHeight)
-    var width = Math.round((100+window.innerWidth)/300)
+    var width = Math.round((window.innerWidth)/300)
     if (width >= 8) {
       width = 7
     }
@@ -128,15 +138,15 @@ function App() {
   return (
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
       <Suspense fallback={null}>
-        <div className='h-fit w-full mt-16 top-0 absolute'>
-          <div className={itemsWindowTailwind}> {/* Needs to dynamically adjust grids */}
+        <div className='h-fit w-full mt-16 top-0 absolute flex items-center justify-center'>
+          <div className={itemsWindowTailwind}>
             <div className='col-span-1 grid-rows-2'>
               <GetUser getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} />
             </div>
             {items}
           </div>
         </div>
-        <NavBar postClick={postClick} selfItems={selfItems}></NavBar>
+        <NavBar postClick={postClick} selfItems={selfItems} createItem={createItem}></NavBar>
         <Footer />
       </Suspense>
     </div>
