@@ -2,6 +2,9 @@ import '../App.css';
 import React, { Component } from "react";
 import axios from 'axios';
 
+/*Allows user to post items to database
+
+*/
 export default class ItemForm extends Component {
 
   state = {

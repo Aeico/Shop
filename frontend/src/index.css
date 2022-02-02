@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* contains tailwind classes */
 @layer components {
     .nav-text {
         @apply relative flex bg-orange-700 rounded-3xl px-3 pb-1

@@ -1,6 +1,7 @@
 import '../App.css';
 import React from "react";
 
+//returns a div with all relevant information for the information recieved
 export function Items({ name, description, price}) {
   return( <div className='h-40 w-64 border-4 rounded-xl my-3 m-2.5 shadow-xl text-white text-lg border-orange-500 border-solid 
       hover:border-green-700 bg-gray-900 transition-all duration-300 ease-linear px-2 group'>

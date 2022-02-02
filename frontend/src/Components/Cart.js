@@ -1,6 +1,8 @@
 import '../App.css';
 import React from "react";
 
+// provides a cart that as of now can have one item and increase and decrease quantity
+
 export function Cart({ cartInfo, setCartInfo, cartClassName }) {
 
   const lowerQuantity = () => {

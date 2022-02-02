@@ -8,6 +8,10 @@ import Cart from './Cart';
 //http://127.0.0.1:8000/user/1
 //https://joakimjlsv.pythonanywhere.com/user/1/
 
+/*the main class for user interface such as name, how much currency and the cart interface( defined in Cart.js )
+
+*/
+
 export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInfo }) {
   var cartClassName = cartToggled ? 'cart-popup scale-100':'cart-popup scale-0'
 
