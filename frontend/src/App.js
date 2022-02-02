@@ -6,6 +6,11 @@ import PostUser from './Components/PostUser';
 import ItemForm from './Components/ItemForm';
 import axios from "axios";
 
+/* Working frontend shop application that sends information to the
+backend located on pythonanywhere.com using the selfmade Python Django Restframwork API
+
+*/
+
 //the navigation bar at the top of the window
 function NavBar({ postClick, selfItems, createItem }) {
   return (
@@ -26,10 +31,10 @@ function NavBar({ postClick, selfItems, createItem }) {
 }
 
 //the create item button ( sends to createItem which reveals form which posts to api )
-function CreateItem({ buttonPressed }) {
+function CreateItem({ createItem }) {
   return (
     <div>
-      <button onClick={buttonPressed} className='nav-text'>Create Item</button>
+      <button onClick={createItem} className='nav-text'>Create Item</button>
       <ItemForm />
     </div>
   )
@@ -52,7 +57,7 @@ function Footer() {
 function App() {
   //should open up form (currently on all the time)
   const createItem = () => {
-    return (<div>Hello</div>)
+    
   }
 
   //state of cart (currently only allows 1 fake item)
