@@ -1,7 +1,7 @@
 import '../App.css';
 import axios from "axios";
 import React from "react";
-import { Canvas} from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import Currency from './Currency';
 import Cart from './Cart';
 
@@ -13,9 +13,11 @@ import Cart from './Cart';
 */
 
 export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInfo }) {
-  var cartClassName = cartToggled ? 'cart-popup scale-100':'cart-popup scale-0'
+  var cartClassName = cartToggled ? 'cart-popup scale-100' : 'cart-popup scale-0'
 
   var cart = <Cart cartInfo={cartInfo} cartClassName={cartClassName} setCartInfo={setCartInfo}></Cart>
+
+  var allCarts = <Cart cartInfo={cartInfo} cartClassName={cartClassName} setCartInfo={setCartInfo}></Cart>
 
   if (!getCur) return <p>Loading</p>;
   return (
@@ -25,7 +27,7 @@ export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInf
         <div className='w-20 h-20 inline-flex pt-1'>
           <Canvas camera={{ position: [0, 0, 2] }}>
             <ambientLight intensity={0.2} />
-            <directionalLight color="white" position={[0, 0, 5]}  />
+            <directionalLight color="white" position={[0, 0, 5]} />
             <Currency />
           </Canvas>
         </div>
@@ -33,7 +35,9 @@ export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInf
       </div>
       <div className='group'>
         <button onClick={cartClicked} key={cartToggled} className='bg-gray-300 rounded-3xl p-2 font-bold'>Your cart</button>
-        {cart}
+        <div className={cartClassName}>
+          {cart}
+        </div>
       </div>
     </div>
   )
