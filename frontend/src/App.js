@@ -12,7 +12,7 @@ backend located on pythonanywhere.com using the selfmade Python Django Restframw
 */
 
 //the navigation bar at the top of the window
-function NavBar({ postClick, selfItems, createItem }) {
+function NavBar({ postClick, selfItems, createItem, formClassName }) {
   return (
     <div className='bg-orange-800 shadow-lg'>
       <ul className='flex h-16 w-screen justify-center items-center shadow-lg'>
@@ -21,7 +21,7 @@ function NavBar({ postClick, selfItems, createItem }) {
         </div>
         <div className='flex items-center justify-center space-x-6'>
           <NavText buttonPressed={postClick} text="Get Currency" />
-          <CreateItem buttonPressed={createItem} />
+          <CreateItem buttonPressed={createItem} formClassName={formClassName} />
           <NavText buttonPressed={selfItems} text="Order History" />
           <NavText buttonPressed={selfItems} text="Your Items" />
         </div>
@@ -31,11 +31,11 @@ function NavBar({ postClick, selfItems, createItem }) {
 }
 
 //the create item button ( sends to createItem which reveals form which posts to api )
-function CreateItem({ createItem }) {
+function CreateItem({ buttonPressed, formClassName }) {
   return (
     <div>
-      <button onClick={createItem} className='nav-text'>Create Item</button>
-      <ItemForm />
+      <button onClick={buttonPressed} className='nav-text'>Create Item</button>
+      <ItemForm formClassName={formClassName} />
     </div>
   )
 }
@@ -55,14 +55,29 @@ function Footer() {
 }
 
 function App() {
-  //should open up form (currently on all the time)
+  //boolean for showing form
+  const [itemFormVisible, setItemFormVisible] = useState(false);
+
+  //sets form to visible or not
   const createItem = () => {
-    
+    if (itemFormVisible? setItemFormVisible(false) : setItemFormVisible(true));
   }
 
+  //classname String for form
+  var formClassName = itemFormVisible ? 'transition-all scale-100':'transition-all  scale-0';
+
+  //changes the classname string when itemFormVisible has been changed
+  useEffect(() => {
+    formClassName = itemFormVisible ? ' transition-all scale-100':'transition-all  scale-0';
+  }, [itemFormVisible]);
+
   //state of cart (currently only allows 1 fake item)
-  const [cartInfo, setCartInfo] = useState({name: "Item Name",
-  quantity: 10})
+  const [cartInfo, setCartInfo] = useState([{name: "Item Name",
+  quantity: 10},{
+    name: "Item2",quantity: 15
+  }])
+
+  
 
   //runs on change of cartInfo currently doesn't do anything
   useEffect(() => {
@@ -75,7 +90,7 @@ function App() {
   if (preWidth >= 9) {
     preWidth = 8
   }
-  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-2')
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-'+preWidth)
 
   //recalculates grid of items when ran (runs from eventListener below) 
   const checkWindow = () => {
@@ -172,7 +187,7 @@ function App() {
             {items}{/* contains all items that should be shown */}
           </div>
         </div>
-        <NavBar postClick={postClick} selfItems={selfItems} createItem={createItem}></NavBar>{/* the navbar with all it's button presses */}
+        <NavBar postClick={postClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName}></NavBar>{/* the navbar with all it's button presses */}
         <Footer />
       </Suspense>
     </div>

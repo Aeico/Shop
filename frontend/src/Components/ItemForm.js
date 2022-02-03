@@ -17,22 +17,26 @@ export default class ItemForm extends Component {
 
   testChanged = event => {
     this.setState({
-    "author_fk": event.target.value,})
+      "author_fk": event.target.value,
+    })
   };
 
   nameChanged = event => {
     this.setState({
-    "name": event.target.value,})
+      "name": event.target.value,
+    })
   };
 
   descChanged = event => {
     this.setState({
-    "description": event.target.value,})
+      "description": event.target.value,
+    })
   };
 
   priceChanged = event => {
     this.setState({
-    "price": event.target.value,})
+      "price": event.target.value,
+    })
   };
 
   handleSubmit = event => {
@@ -46,30 +50,32 @@ export default class ItemForm extends Component {
       "price": this.state.price,
     };
 
-    axios.post("http://127.0.0.1:8000/item/",item)
+    axios.post("http://127.0.0.1:8000/item/", item)
       .then(res => {
         console.log(res)
         console.log(res.data)
       })
 
   }
-
+  
   render() {
     return (
-      <div className='h-fit w-48 absolute bg-gray-500'>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Author id:
-            <input type="number" name="author_fk" onChange={this.testChanged}/>
-            Item name:
-            <input type="text" name="name" onChange={this.nameChanged}/>
-            Item description:
-            <input type="text" name="description" onChange={this.descChanged} />
-            Price:
-            <input type="number" name="price" onChange={this.priceChanged} />
-          </label>
-          <button type="submit">Create</button>
-        </form>
+      <div className={this.props.formClassName}>
+        <div className='h-fit w-fit absolute bg-gray-500 rounded-xl'>
+          <form onSubmit={this.handleSubmit} className='p-3 '>
+            <label>
+              Author id:
+              <input type="number" name="author_fk" onChange={this.testChanged} />
+              Item name:
+              <input type="text" name="name" onChange={this.nameChanged} />
+              Item description:
+              <input type="text" name="description" onChange={this.descChanged} />
+              Price:
+              <input type="number" name="price" onChange={this.priceChanged} />
+            </label>
+            <button className='font-bold rounded-3xl bg-gray-300 pb-1 px-2 mt-2 hover:rounded-xl hover:bg-gray-100 transition-all' type="submit">Create</button>
+          </form>
+        </div>
       </div>
     )
   }
