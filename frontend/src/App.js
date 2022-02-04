@@ -72,12 +72,7 @@ function App() {
   }, [itemFormVisible]);
 
   //state of cart (currently only allows 1 fake item)
-  const [cartInfo, setCartInfo] = useState([{name: "Item Name",
-  quantity: 10},{
-    name: "Item2",quantity: 15
-  }])
-
-  
+  const [cartInfo, setCartInfo] = useState([])
 
   //runs on change of cartInfo currently doesn't do anything
   useEffect(() => {
@@ -159,13 +154,22 @@ function App() {
     setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 100 });
   }
 
+  //pressed to buy item
+  const buyClicked = (props) => {
+    console.log(props.item_id)
+    setCartInfo( cartInfo => [...cartInfo, {item_id: props.item_id,
+      name: props.name,
+      quantity: 1,}]);
+  }
+
   //maps all items to the Component items to put on screen
   if (get) {
-    var items = get.map(item => <Items key={item.item_id} className='col-span-1 grid-rows-1'
+    var items = get.map(item => <Items key={item.item_id} buyClicked={buyClicked} item_id={item.item_id} className='col-span-1 grid-rows-1'
       name={item.name} description={item.description} price={item.price}>
     </Items>)
   }
 
+  
   //if cart should be shown when pressing cart button
   const [cartToggled, setcartToggled] = useState(false);
 
