@@ -13,7 +13,7 @@ export default class Items extends Component {
           <p>{this.props.name}</p>
           <p>{this.props.description}</p>
           <div>Cost: {this.props.price}</div>
-          <button onClick={this.props.buyClicked} className='buy-popup group-hover:scale-100'>Buy</button>
+          <button onClick={(e) => this.props.buyClicked(this.props, e)} className='buy-popup group-hover:scale-100'>Buy</button>
         </div>
       </div>
     )
