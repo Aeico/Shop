@@ -60,41 +60,39 @@ function App() {
 
   //sets form to visible or not
   const createItem = () => {
-    if (itemFormVisible? setItemFormVisible(false) : setItemFormVisible(true));
+    if (itemFormVisible ? setItemFormVisible(false) : setItemFormVisible(true));
   }
 
   //classname String for form
-  var formClassName = itemFormVisible ? 'transition-all scale-100':'transition-all  scale-0';
+  var formClassName = itemFormVisible ? 'transition-all scale-100' : 'transition-all  scale-0';
 
   //changes the classname string when itemFormVisible has been changed
   useEffect(() => {
-    formClassName = itemFormVisible ? ' transition-all scale-100':'transition-all  scale-0';
+    formClassName = itemFormVisible ? ' transition-all scale-100' : 'transition-all  scale-0';
   }, [itemFormVisible]);
 
   //state of cart (currently only allows 1 fake item)
   const [cartInfo, setCartInfo] = useState([])
 
-  //runs on change of cartInfo currently doesn't do anything
-  useEffect(() => {
-
-  }, [cartInfo]);
+  //force refresh when cartInfo changed
+  useEffect(() => { }, [cartInfo]);
 
   //initial width of item grid depending on screensize ( has a tendency to break as of now )
   //the issue happends when intial state hasn't been set to that amount of columns
-  var preWidth = Math.round((window.innerWidth)/300)
+  var preWidth = Math.round((window.innerWidth) / 300)
   if (preWidth >= 9) {
     preWidth = 8
   }
-  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-'+preWidth)
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-' + preWidth)
 
   //recalculates grid of items when ran (runs from eventListener below) 
   const checkWindow = () => {
-    var width = Math.round((window.innerWidth)/300)
+    var width = Math.round((window.innerWidth) / 300)
     if (width >= 9) {
       width = 8
     }
-    var height = Math.round((window.innerHeight-100)/300)
-    setItemsWindowTailwind('h-fit w-6/6 grid grid-flow-row-dense grid-cols-'+ width +' grid-rows-' + height + ' justify-center')
+    var height = Math.round((window.innerHeight - 100) / 300)
+    setItemsWindowTailwind('h-fit w-6/6 grid grid-flow-row-dense grid-cols-' + width + ' grid-rows-' + height + ' justify-center')
   }
 
   //adds event listener to check resize onComponentMount(but as useEffect with empty checking array)
@@ -114,15 +112,15 @@ function App() {
   const [get, setGet] = React.useState(null);
   React.useEffect(() => {
     if (!userItems) {
-    axios.get('http://127.0.0.1:8000/item')
-      .then((response) => {
-        setGet(response.data)
-      });
+      axios.get('http://127.0.0.1:8000/item')
+        .then((response) => {
+          setGet(response.data)
+        });
     } else {
-      axios.get('http://127.0.0.1:8000/item/'+getCur.user_id+'/')
-      .then((response) => {
-        setGet(response.data)
-      });
+      axios.get('http://127.0.0.1:8000/item/' + getCur.user_id + '/')
+        .then((response) => {
+          setGet(response.data)
+        });
     }
   }, [userItems]);
 
@@ -150,16 +148,25 @@ function App() {
 
   //pressed get currency button
   const postClick = () => {
-    setPostCount(postCount+1);
+    setPostCount(postCount + 1);
     setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 100 });
   }
 
-  //pressed to buy item
+  //pressed to buy item ignore if same as other
   const buyClicked = (props) => {
-    console.log(props.item_id)
-    setCartInfo( cartInfo => [...cartInfo, {item_id: props.item_id,
-      name: props.name,
-      quantity: 1,}]);
+    var wasIn = false;
+    cartInfo.map(element => {
+      if (props.item_id === element.item_id) {
+        wasIn=true;
+      }
+    });
+    if (!wasIn) {//If it wasn't found add it
+      setCartInfo(cartInfo => [...cartInfo, {
+        item_id: props.item_id,
+        name: props.name,
+        quantity: 1,
+      }]);
+    }
   }
 
   //maps all items to the Component items to put on screen
@@ -169,7 +176,7 @@ function App() {
     </Items>)
   }
 
-  
+
   //if cart should be shown when pressing cart button
   const [cartToggled, setcartToggled] = useState(false);
 
