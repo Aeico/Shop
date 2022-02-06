@@ -5,32 +5,55 @@ import React from "react";
 
 export function Cart({ cartInfo, setCartInfo }) {
   const lowerQuantity = (item) => {
-    var newCart = cartInfo
+    const newCart = [...cartInfo]
     newCart.map(mapItem => {
-      if (mapItem.item_id == item.item_id) {
-        mapItem.quantity -= 1;
+      if (mapItem.quantity > 1) {
+        if (mapItem.item_id === item.item_id) {
+          mapItem.quantity -= 1;
+        }
       }
     })
     setCartInfo(newCart)
   }
 
   const increaseQuantity = (item) => {
-    var newCart = cartInfo
+    const newCart = [...cartInfo]
     newCart.map(mapItem => {
-      if (mapItem.item_id == item.item_id) {
+      if (mapItem.item_id === item.item_id) {
         mapItem.quantity += 1;
       }
     })
     setCartInfo(newCart)
   }
 
+  const remove = (item) => {
+    const newCart = [...cartInfo]
+    for (let i = 0; i < newCart.length; i++) {
+      if (newCart[i].item_id === item.item_id) {
+        newCart.splice(i, 1)
+      }
+    }
+    setCartInfo(newCart)
+  }
+
+  const buyClicked = () => {
+    console.log("hi")
+  }
+
   var cartItems = cartInfo.map(item =>
     <div key={item.item_id}>
       <h2>{item.name}</h2>
-      <div className='justify-center'> <button onClick={(e) => lowerQuantity(item, e)}>-</button>{item.quantity}<button onClick={(e) => increaseQuantity(item, e)}>+</button></div>
+      <div className='justify-center'>
+        <button onClick={(e) => lowerQuantity(item, e)}>-</button>{item.quantity}
+        <button onClick={(e) => increaseQuantity(item, e)}>+</button>
+        <button className='absolute right-0 mr-3' title={'Remove ' + item.name} onClick={(e) => remove(item, e)}>X</button></div>
+        
     </div>)
   return (
-    cartItems
+    <div>
+      {cartItems}
+      <button onClick={buyClicked}>Confirm Order</button>
+    </div>
   )
 }
 

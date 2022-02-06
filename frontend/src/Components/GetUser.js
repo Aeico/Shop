@@ -17,8 +17,6 @@ export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInf
 
   var cart = <Cart cartInfo={cartInfo} cartClassName={cartClassName} setCartInfo={setCartInfo}></Cart>
 
-  var allCarts = <Cart cartInfo={cartInfo} cartClassName={cartClassName} setCartInfo={setCartInfo}></Cart>
-
   if (!getCur) return <p>Loading</p>;
   return (
     <div className='h-full w-full p-6 bg-orange-700 items-center text-3xl shadow-lg'>
