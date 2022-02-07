@@ -12,7 +12,7 @@ backend located on pythonanywhere.com using the selfmade Python Django Restframw
 */
 
 //the navigation bar at the top of the window
-function NavBar({ postClick, selfItems, createItem, formClassName }) {
+function NavBar({ postClick, selfItems, createItem, formClassName, user }) {
   return (
     <div className='bg-orange-800 shadow-lg'>
       <ul className='flex h-16 w-screen justify-center items-center shadow-lg'>
@@ -21,7 +21,7 @@ function NavBar({ postClick, selfItems, createItem, formClassName }) {
         </div>
         <div className='flex items-center justify-center space-x-6'>
           <NavText buttonPressed={postClick} text="Get Currency" />
-          <CreateItem buttonPressed={createItem} formClassName={formClassName} />
+          <CreateItem buttonPressed={createItem} formClassName={formClassName} user={user} />
           <NavText buttonPressed={selfItems} text="Order History" />
           <NavText buttonPressed={selfItems} text="Your Items" />
         </div>
@@ -31,11 +31,11 @@ function NavBar({ postClick, selfItems, createItem, formClassName }) {
 }
 
 //the create item button ( sends to createItem which reveals form which posts to api )
-function CreateItem({ buttonPressed, formClassName }) {
+function CreateItem({ buttonPressed, formClassName, user }) {
   return (
     <div>
       <button onClick={buttonPressed} className='nav-text'>Create Item</button>
-      <ItemForm formClassName={formClassName} />
+      <ItemForm formClassName={formClassName} user={user} />
     </div>
   )
 }
@@ -55,6 +55,14 @@ function Footer() {
 }
 
 function App() {
+  //initial user state = 0 since aka no user
+  const [user, setUser] = useState(1)
+
+  //reload when user changed
+  useEffect(() => {
+
+  },[user])
+
   //boolean for showing form
   const [itemFormVisible, setItemFormVisible] = useState(false);
 
@@ -198,7 +206,7 @@ function App() {
             {items}{/* contains all items that should be shown */}
           </div>
         </div>
-        <NavBar postClick={postClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName}></NavBar>{/* the navbar with all it's button presses */}
+        <NavBar postClick={postClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName} user={user}></NavBar>{/* the navbar with all it's button presses */}
         <Footer />
       </Suspense>
     </div>

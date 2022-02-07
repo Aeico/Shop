@@ -1,6 +1,8 @@
+import re
 from shop.models import Item, User
 from shop.serializers import UserSerializer, ItemSerializer
 from django.http import Http404
+from django.db.models import Max
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -54,6 +56,7 @@ class UserDetail(APIView):
 class ItemDetail(APIView):
     #create item with post request (requires id as of now)
     def post(self, request, format=None):
+        request.data['item_id'] = Item.objects.aggregate(Max('item_id'))['item_id__max']+1 #highest id +1 to create next
         serializer = ItemSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -65,6 +68,8 @@ class ItemDetail(APIView):
         items = Item.objects.all()
         serializer = ItemSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 
 #allows to collect items of primary key user
 class ItemsOfUser(APIView):
@@ -78,3 +83,9 @@ class ItemsOfUser(APIView):
         items = Item.objects.filter(author_fk=pk)
         serializer = ItemSerializer(items, many=True)
         return Response(serializer.data)
+
+    #deletes items of the user
+    def delete(self, request, pk, format=None):
+        items = Item.objects.filter(author_fk=pk)
+        items.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

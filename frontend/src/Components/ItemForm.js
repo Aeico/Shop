@@ -8,18 +8,12 @@ import axios from 'axios';
 export default class ItemForm extends Component {
 
   state = {
-    "item_id": 9,
-    "author_fk": 1,
+    "item_id": 0,//will be set on backend
+    "author_fk": this.props.user,
     "name": "The Moon",
     "description": "The nothing moon can be bought for 1000 nothings!",
     "price": 1000
   }
-
-  testChanged = event => {
-    this.setState({
-      "author_fk": event.target.value,
-    })
-  };
 
   nameChanged = event => {
     this.setState({
@@ -64,8 +58,6 @@ export default class ItemForm extends Component {
         <div className='h-fit w-fit absolute bg-gray-500 rounded-xl'>
           <form onSubmit={this.handleSubmit} className='p-3 '>
             <label>
-              Author id:
-              <input type="number" name="author_fk" onChange={this.testChanged} />
               Item name:
               <input type="text" name="name" onChange={this.nameChanged} />
               Item description:
