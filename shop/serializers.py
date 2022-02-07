@@ -4,7 +4,7 @@ from shop.models import Cart, CartItem, Order, OrderItem, User, Item
 class UserSerializer(serializers.ModelSerializer):
     class Meta: 
         model = User
-        fields = ['user_id','name','currency']
+        fields = ['user_id','name','currency','is_temp','changed_date']
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
