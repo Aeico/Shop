@@ -1,4 +1,5 @@
-import re
+from ast import For
+import datetime
 from shop.models import Item, User
 from shop.serializers import UserSerializer, ItemSerializer
 from django.http import Http404
@@ -54,6 +55,15 @@ class UserDetail(APIView):
 
 #retrieve information about items and post item
 class ItemDetail(APIView):
+    #delete temp users that are too old
+    def delete_temp(self):
+        temp_users = User.objects.filter(is_temp=True)
+        now = datetime.datetime.now(datetime.timezone.utc)
+        for user in temp_users:
+            elapsed_since_changed = (now - user.changed_date)
+            if (elapsed_since_changed > datetime.timedelta(minutes=20)):
+                user.delete()
+
     #create item with post request (requires id as of now)
     def post(self, request, format=None):
         request.data['item_id'] = Item.objects.aggregate(Max('item_id'))['item_id__max']+1 #highest id +1 to create next
@@ -65,20 +75,14 @@ class ItemDetail(APIView):
     
     #gets all items
     def get(self, request, format=None):
+        self.delete_temp()
         items = Item.objects.all()
         serializer = ItemSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-
 #allows to collect items of primary key user
 class ItemsOfUser(APIView):
-    def get_object(self, pk):
-        try:
-            return User.objects.get(pk=pk)
-        except:
-            raise Http404
-
     def get(self, request, pk, format=None,):
         items = Item.objects.filter(author_fk=pk)
         serializer = ItemSerializer(items, many=True)
@@ -89,3 +93,8 @@ class ItemsOfUser(APIView):
         items = Item.objects.filter(author_fk=pk)
         items.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class PostOrderItems(APIView):
+    def post(self,request,pk,formate=None):
+        
+        return Response()
