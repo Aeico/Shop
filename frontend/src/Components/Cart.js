@@ -43,14 +43,14 @@ export function Cart({ cartInfo, setCartInfo }) {
   var cartItems = cartInfo.map(item =>
     <div key={item.item_id}>
       <h2>{item.name}</h2>
-      <div className='justify-center'>
+      <div className='justify-center font-normal'>
         <button onClick={(e) => lowerQuantity(item, e)}>-</button>{item.quantity}
         <button onClick={(e) => increaseQuantity(item, e)}>+</button>
         <button className='absolute right-0 mr-3' title={'Remove ' + item.name} onClick={(e) => remove(item, e)}>X</button></div>
         
     </div>)
   return (
-    <div>
+    <div className='h-fit w-fit'>
       {cartItems}
       <button onClick={buyClicked}>Confirm Order</button>
     </div>

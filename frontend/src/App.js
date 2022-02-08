@@ -14,10 +14,10 @@ backend located on pythonanywhere.com using the selfmade Python Django Restframw
 //the navigation bar at the top of the window
 function NavBar({ postClick, selfItems, createItem, formClassName, user }) {
   return (
-    <div className='bg-orange-800 shadow-lg'>
+    <div className='bg-gradient-to-r from-grey-100 to-blue-500 shadow-lg'>
       <ul className='flex h-16 w-screen justify-center items-center shadow-lg'>
         <div className='ml-3 fixed left-0'>
-          <NavText text="Nothing Shop" />
+          <h1 className='nav-text text-3xl'>Nothing Shop</h1>
         </div>
         <div className='flex items-center justify-center space-x-6'>
           <NavText buttonPressed={postClick} text="Get Currency" />
@@ -50,7 +50,7 @@ function NavText({ text, buttonPressed }) {
 //the footer currently needs work
 function Footer() {
   return (
-    <div className='bg-gray-500 h-16 p-5 absolute inline-flex items-center justify-center inset-x-0 bottom-0'>About</div>
+    <div className='backdrop-brightness-90 h-16 p-5 absolute inline-flex items-center justify-center inset-x-0 bottom-0'>About</div>
   )
 }
 
@@ -91,7 +91,8 @@ function App() {
   if (preWidth >= 9) {
     preWidth = 8
   }
-  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-' + preWidth)
+  // + preWidth
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-5')
 
   //recalculates grid of items when ran (runs from eventListener below) 
   const checkWindow = () => {
@@ -197,6 +198,9 @@ function App() {
   return (
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
       <Suspense fallback={null}>
+        <div className='h-screen w-screen absolute bg-gradient-to-r from-cyan-500 to-blue-300'>
+
+        </div>
         <div className='h-fit w-full mt-16 top-0 absolute flex items-center justify-center'>
           <div className={itemsWindowTailwind}>{/* the resizing part of the window that contains cols and rows of items */}
             <div className='col-span-1 grid-rows-2'>

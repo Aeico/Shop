@@ -4,9 +4,9 @@
 /* contains tailwind classes */
 @layer components {
     .nav-text {
-        @apply relative flex bg-orange-700 rounded-3xl px-3 pb-1
-        hover:bg-orange-500 shadow-lg hover:rounded-xl
-        transition-all duration-300 ease-linear top-0  font-bold;
+        @apply relative flex bg-inherit rounded-3xl px-3 pb-1
+        hover:bg-white shadow-lg hover:rounded-xl
+        transition-all duration-300 ease-linear top-0  font-normal;
     }
 
     .buy-popup {
