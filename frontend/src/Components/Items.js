@@ -7,12 +7,12 @@ import { Component } from 'react';
 export default class Items extends Component {
   render() {
     return (
-      <div className='h-40 w-64 border-4 rounded-xl my-3 m-2.5 shadow-xl text-white text-lg border-orange-500 border-solid 
-      hover:border-green-700 bg-gray-900 transition-all duration-300 ease-linear px-2 group'>
+      <div className='h-40 w-64 relative border-4 rounded-xl my-3 m-2.5 shadow-xl text-black text-lg border-black border-solid 
+      hover:border-white backdrop-blur-sm transition-all duration-300 ease-linear px-2 group'>
         <div>
-          <p>{this.props.name}</p>
-          <p>{this.props.description}</p>
-          <div>Cost: {this.props.price}</div>
+          <h1 className='font-semibold'>{this.props.name}</h1>
+          <p className='font-normal'>{this.props.description}</p>
+          <div className='font-normal'>Cost: {this.props.price}</div>
           <button onClick={(e) => this.props.buyClicked(this.props, e)} className='buy-popup group-hover:scale-100'>Buy</button>
         </div>
       </div>
