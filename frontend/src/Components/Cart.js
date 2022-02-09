@@ -52,7 +52,7 @@ export function Cart({ cartInfo, setCartInfo }) {
   return (
     <div className='h-fit w-fit'>
       {cartItems}
-      <button onClick={buyClicked}>Confirm Order</button>
+      <button onClick={buyClicked}>Purchase</button>
     </div>
   )
 }

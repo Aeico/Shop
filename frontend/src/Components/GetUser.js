@@ -31,7 +31,7 @@ export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInf
         </div>
         : {getCur.currency}
       </div>
-      <div className='group'>
+      <div className='group z-30 relative'>
         <button onClick={cartClicked} key={cartToggled} className='bg-gray-300 rounded-3xl p-2 font-bold'>Your cart</button>
         <div className={cartClassName}>
           {cart}
