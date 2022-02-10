@@ -3,8 +3,10 @@ import './App.css';
 import GetUser from './Components/GetUser';
 import Items from './Components/Items';
 import PostUser from './Components/PostUser';
+import { Canvas } from '@react-three/fiber'
 import ItemForm from './Components/ItemForm';
 import axios from "axios";
+import FiberBackground from './Components/FiberBackground';
 
 /* Working frontend shop application that sends information to the
 backend located on pythonanywhere.com using the selfmade Python Django Restframwork API
@@ -12,7 +14,7 @@ backend located on pythonanywhere.com using the selfmade Python Django Restframw
 */
 
 //the navigation bar at the top of the window
-function NavBar({ postClick, selfItems, createItem, formClassName, user }) {
+function NavBar({ postCurrencyClick, selfItems, createItem, formClassName, user }) {
   return (
     <div className='bg-gradient-to-r from-grey-100 to-blue-500 shadow-lg'>
       <ul className='flex h-16 w-screen justify-center items-center shadow-lg'>
@@ -20,7 +22,7 @@ function NavBar({ postClick, selfItems, createItem, formClassName, user }) {
           <h1 className='nav-text text-3xl'>Nothing Shop</h1>
         </div>
         <div className='flex items-center justify-center space-x-6'>
-          <NavText buttonPressed={postClick} text="Get Currency" />
+          <NavText buttonPressed={postCurrencyClick} text="Get Currency" />
           <CreateItem buttonPressed={createItem} formClassName={formClassName} user={user} />
           <NavText buttonPressed={selfItems} text="Order History" />
           <NavText buttonPressed={selfItems} text="Your Items" />
@@ -61,7 +63,7 @@ function App() {
   //reload when user changed
   useEffect(() => {
 
-  },[user])
+  }, [user])
 
   //boolean for showing form
   const [itemFormVisible, setItemFormVisible] = useState(false);
@@ -156,7 +158,7 @@ function App() {
   }, [postCount]);
 
   //pressed get currency button
-  const postClick = () => {
+  const postCurrencyClick = () => {
     setPostCount(postCount + 1);
     setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 100 });
   }
@@ -166,8 +168,10 @@ function App() {
     var wasIn = false;
     cartInfo.map(element => {
       if (props.item_id === element.item_id) {
-        wasIn=true;
+        wasIn = true;
+        var notBoughtItem = element.item_id
       }
+      return notBoughtItem;
     });
     if (!wasIn) {//If it wasn't found add it
       setCartInfo(cartInfo => [...cartInfo, {
@@ -197,10 +201,17 @@ function App() {
   //the return of the entire app suspense is there for the 3d object(s) 
   return (
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
-      <Suspense fallback={null}>
-        <div className='h-screen w-screen absolute bg-gradient-to-r from-cyan-500 to-blue-300'>
 
-        </div>
+      <div className='h-screen w-screen absolute bg-gradient-to-r from-cyan-500 to-blue-300'>
+        <Suspense fallback={null}>
+          <Canvas camera={{ position: [0, 0, 2] }}>
+            <ambientLight intensity={0.2} />
+            <directionalLight color="white" position={[0, 0, 5]} />
+            <FiberBackground></FiberBackground>
+          </Canvas>
+        </Suspense>
+      </div>
+      <Suspense fallback={null}>
         <div className='h-fit w-full mt-16 top-0 absolute flex items-center justify-center'>
           <div className={itemsWindowTailwind}>{/* the resizing part of the window that contains cols and rows of items */}
             <div className='col-span-1 grid-rows-2'>
@@ -210,9 +221,10 @@ function App() {
             {items}{/* contains all items that should be shown */}
           </div>
         </div>
-        <NavBar postClick={postClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName} user={user}></NavBar>{/* the navbar with all it's button presses */}
+        <NavBar postCurrencyClick={postCurrencyClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName} user={user}></NavBar>{/* the navbar with all it's button presses */}
         <Footer />
       </Suspense>
+
     </div>
   );
 }

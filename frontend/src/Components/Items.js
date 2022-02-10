@@ -7,7 +7,7 @@ import { Component } from 'react';
 export default class Items extends Component {
   render() {
     return (
-      <div className='h-40 w-64 relative border-4 rounded-xl my-3 m-2.5 shadow-xl text-black text-lg border-black border-solid 
+      <div className='h-40 w-64 relative border-2 rounded-xl my-3 m-2.5 shadow-xl text-black text-lg border-black border-solid 
       hover:border-white backdrop-blur-sm transition-all duration-300 ease-linear px-2 group z-10'>
         <div>
           <h1 className='font-semibold'>{this.props.name}</h1>
