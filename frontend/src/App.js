@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, Suspense } from 'react';
 import './App.css';
-import GetUser from './Components/GetUser';
+import UserInfo from './Components/UserInfo';
 import Items from './Components/Items';
 import PostUser from './Components/PostUser';
 import { Canvas } from '@react-three/fiber'
@@ -74,11 +74,11 @@ function App() {
   }
 
   //classname String for form
-  var formClassName = itemFormVisible ? 'transition-all scale-100' : 'transition-all  scale-0';
+  var formClassName = itemFormVisible ? 'z-30 relative transition-all scale-100' : 'z-30 relative transition-all  scale-0';
 
   //changes the classname string when itemFormVisible has been changed
   useEffect(() => {
-    formClassName = itemFormVisible ? ' transition-all scale-100' : 'transition-all  scale-0';
+    formClassName = itemFormVisible ? 'z-30 relative transition-all scale-100' : 'z-30 relative transition-all  scale-0';
   }, [itemFormVisible]);
 
   //state of cart (currently only allows 1 fake item)
@@ -201,7 +201,6 @@ function App() {
   //the return of the entire app suspense is there for the 3d object(s) 
   return (
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
-
       <div className='h-screen w-screen absolute bg-gradient-to-r from-cyan-500 to-blue-300'>
         <Suspense fallback={null}>
           <Canvas camera={{ position: [0, 0, 2] }}>
@@ -215,7 +214,7 @@ function App() {
         <div className='h-fit w-full mt-16 top-0 absolute flex items-center justify-center'>
           <div className={itemsWindowTailwind}>{/* the resizing part of the window that contains cols and rows of items */}
             <div className='col-span-1 grid-rows-2'>
-              <GetUser getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} />
+              <UserInfo getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} />
               {/* GetUser contains the user info and cart info */}
             </div>
             {items}{/* contains all items that should be shown */}
@@ -224,7 +223,6 @@ function App() {
         <NavBar postCurrencyClick={postCurrencyClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName} user={user}></NavBar>{/* the navbar with all it's button presses */}
         <Footer />
       </Suspense>
-
     </div>
   );
 }
