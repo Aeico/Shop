@@ -10,14 +10,12 @@ function FiberBackground(props) {
   const group = useRef()
   const { nodes, materials } = useLoader(GLTFLoader, '../models/0Coin.glb')
 
-  useFrame(() => (group.current.rotation.z += 0.003))//rate of spin on z axis
+  useFrame(() => (group.current.rotation.z += 0.001))//rate of spin on z axis
   return (
-    
-      <group ref={group} {...props} rotation={[90, 0, 0]} onClick={(event) => console.log("hi")}>
-        <mesh geometry={nodes.Coin.geometry} material={materials.Coin} />
-        <mesh geometry={nodes.Zero.geometry} material={materials.Zero} />
-      </group>
-    
+    <group ref={group} {...props} rotation={[90, 0, 0]} onClick={(event) => console.log("hi")}>
+      <mesh geometry={nodes.Coin.geometry} material={materials.Coin} />
+      <mesh geometry={nodes.Zero.geometry} material={materials.Zero} />
+    </group>
   )
 }
 

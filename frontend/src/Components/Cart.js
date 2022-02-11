@@ -1,5 +1,5 @@
 import '../App.css';
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // provides a cart that as of now can have one item and increase and decrease quantity
 
@@ -13,7 +13,7 @@ export function Cart({ cartInfo, setCartInfo }) {
         }
       }
     })
-    setCartInfo(newCart)
+    setCartInfo(newCart);
   }
 
   const increaseQuantity = (item) => {
@@ -23,7 +23,7 @@ export function Cart({ cartInfo, setCartInfo }) {
         mapItem.quantity += 1;
       }
     })
-    setCartInfo(newCart)
+    setCartInfo(newCart);
   }
 
   const remove = (item) => {
@@ -35,6 +35,16 @@ export function Cart({ cartInfo, setCartInfo }) {
     }
     setCartInfo(newCart)
   }
+
+  const [totalCost, setTotalCost] = useState(0)
+  
+  useEffect (() => {
+    var cost = 0;
+    cartInfo.map(mapItem => {
+      cost += mapItem.price * mapItem.quantity;
+    })
+    setTotalCost(cost);
+  },[cartInfo])
 
   const buyClicked = () => {
     console.log("hi")
@@ -52,7 +62,7 @@ export function Cart({ cartInfo, setCartInfo }) {
   return (
     <div className='h-fit w-fit'>
       {cartItems}
-      <button onClick={buyClicked}>Purchase</button>
+      <button onClick={buyClicked}>Purchase for: {totalCost}</button>
     </div>
   )
 }

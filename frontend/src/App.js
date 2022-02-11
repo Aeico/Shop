@@ -160,7 +160,7 @@ function App() {
   //pressed get currency button
   const postCurrencyClick = () => {
     setPostCount(postCount + 1);
-    setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 100 });
+    setGetCur({ user_id: getCur.user_id, name: getCur.name, currency: getCur.currency + 1000 });
   }
 
   //pressed to buy item ignore if same as other
@@ -178,6 +178,7 @@ function App() {
         item_id: props.item_id,
         name: props.name,
         quantity: 1,
+        price: props.price,
       }]);
     }
   }
