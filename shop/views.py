@@ -94,7 +94,28 @@ class ItemsOfUser(APIView):
         items.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class PurchaseCart(APIView):
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def set_currency(self, amount, pk):
+        user = self.get_object(pk)
+        serializer = UserSerializer(user)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def post(self,request,pk,format=None):
+
+        self.set_currency(request.currency, request.item_id)
+        UserDetail.put(request)
+        return Response()
+
 class PostOrderItems(APIView):
-    def post(self,request,pk,formate=None):
+    def post(self,request,pk,format=None):
         
         return Response()
