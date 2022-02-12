@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 // provides a cart that as of now can have one item and increase and decrease quantity
 
-export function Cart({ cartInfo, setCartInfo }) {
+export function Cart({ cartInfo, setCartInfo, user }) {
   const lowerQuantity = (item) => {
     const newCart = [...cartInfo]
     newCart.map(mapItem => {
@@ -37,7 +37,7 @@ export function Cart({ cartInfo, setCartInfo }) {
   }
 
   const [totalCost, setTotalCost] = useState(0)
-  
+
   useEffect (() => {
     var cost = 0;
     cartInfo.map(mapItem => {
@@ -47,7 +47,8 @@ export function Cart({ cartInfo, setCartInfo }) {
   },[cartInfo])
 
   const buyClicked = () => {
-    console.log("hi")
+    console.log(cartInfo)
+    console.log(user)
   }
 
   var cartItems = cartInfo.map(item =>
@@ -57,7 +58,6 @@ export function Cart({ cartInfo, setCartInfo }) {
         <button onClick={(e) => lowerQuantity(item, e)}>-</button>{item.quantity}
         <button onClick={(e) => increaseQuantity(item, e)}>+</button>
         <button className='absolute right-0 mr-3' title={'Remove ' + item.name} onClick={(e) => remove(item, e)}>X</button></div>
-        
     </div>)
   return (
     <div className='h-fit w-fit'>
