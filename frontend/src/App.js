@@ -215,7 +215,7 @@ function App() {
         <div className='h-fit w-full mt-16 top-0 absolute flex items-center justify-center'>
           <div className={itemsWindowTailwind}>{/* the resizing part of the window that contains cols and rows of items */}
             <div className='col-span-1 grid-rows-2'>
-              <UserInfo getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} />
+              <UserInfo getCur={getCur} className='col-span-1 grid-rows-1' cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} user={user} />
               {/* GetUser contains the user info and cart info */}
             </div>
             {items}{/* contains all items that should be shown */}
