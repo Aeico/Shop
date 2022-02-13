@@ -12,10 +12,10 @@ import Cart from './Cart';
 
 */
 
-export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInfo }) {
+export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInfo, user }) {
   var cartClassName = cartToggled ? 'cart-popup scale-100' : 'cart-popup scale-0'
 
-  var cart = <Cart cartInfo={cartInfo} cartClassName={cartClassName} setCartInfo={setCartInfo}></Cart>
+  var cart = <Cart cartInfo={cartInfo} cartClassName={cartClassName} setCartInfo={setCartInfo} user={user}></Cart>
 
   if (!getCur) return <p>Loading</p>;
   return (
