@@ -46,8 +46,7 @@ export default class ItemForm extends Component {
 
     axios.post("http://127.0.0.1:8000/item/", item)
       .then(res => {
-        console.log(res)
-        console.log(res.data)
+        
       })
 
   }

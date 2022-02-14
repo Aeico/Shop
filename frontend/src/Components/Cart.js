@@ -1,5 +1,6 @@
 import '../App.css';
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 // provides a cart that as of now can have one item and increase and decrease quantity
 
@@ -49,6 +50,10 @@ export function Cart({ cartInfo, setCartInfo, user }) {
   const buyClicked = () => {
     console.log(cartInfo)
     console.log(user)
+    axios.post("http://127.0.0.1:8000/cart/" + user +"/", cartInfo)
+    .then(res => {
+      console.log(res.data)
+    });
   }
 
   var cartItems = cartInfo.map(item =>
