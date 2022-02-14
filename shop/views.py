@@ -1,7 +1,7 @@
 from ast import For
 import datetime
-from shop.models import Item, User
-from shop.serializers import UserSerializer, ItemSerializer
+from shop.models import Cart, Item, User
+from shop.serializers import UserSerializer, ItemSerializer, CartSerializer
 from django.http import Http404
 from django.db.models import Max
 from rest_framework.views import APIView
@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 #General user get and post
+
 class UserList(APIView):
     #Gets all users
     def get(self, request, format=None):
@@ -64,7 +65,7 @@ class ItemDetail(APIView):
             if (elapsed_since_changed > datetime.timedelta(minutes=20)):
                 user.delete()
 
-    #create item with post request (requires id as of now)
+    #create item with post request creates with new id
     def post(self, request, format=None):
         request.data['item_id'] = Item.objects.aggregate(Max('item_id'))['item_id__max']+1 #highest id +1 to create next
         serializer = ItemSerializer(data=request.data)
@@ -94,6 +95,12 @@ class ItemsOfUser(APIView):
         items.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+#to allow creation of cart
+class cartObject:
+    def __init__(self, user_fk_id, cart_id):
+        self.user_fk_id = user_fk_id
+        self.cart_id = cart_id
+
 class PurchaseCart(APIView):
     def get_object(self, pk):
         try:
@@ -101,19 +108,26 @@ class PurchaseCart(APIView):
         except:
             raise Http404
 
+    def get(self,request,pk,format=None):
+        cart = Cart.objects.all()
+        serializer = CartSerializer(cart, many=True)
+        return Response(serializer.data)
+
     def set_currency(self, amount, pk):
         user = self.get_object(pk)
-        serializer = UserSerializer(user)
+        serializer = UserSerializer(user, data=user)
         if serializer.is_valid():
             serializer.save()
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     def post(self,request,pk,format=None):
-
-        self.set_currency(request.currency, request.item_id)
-        UserDetail.put(request)
-        return Response()
+        self.set_currency(request.data[0]['price'], pk)
+        #cart = cartObject(pk, 1)
+        cart = {'user_fk_id' : pk, 'cart_id' : 1}
+        serializer = CartSerializer(data=cart)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class PostOrderItems(APIView):
     def post(self,request,pk,format=None):
