@@ -19,7 +19,6 @@ class Item(models.Model):
 class Order(models.Model):
     order_id = models.IntegerField(primary_key=True)
     user_fk_id = models.ForeignKey(User,null=False,on_delete=models.CASCADE)
-    order_number = models.IntegerField(null=False)
 
 class OrderItem(models.Model):
     order_fk_id = models.ForeignKey(Order,null=False,on_delete=models.CASCADE)
