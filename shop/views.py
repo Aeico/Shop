@@ -101,7 +101,7 @@ class cartObject:
         self.user_fk_id = user_fk_id
         self.cart_id = cart_id
 
-class PurchaseCart(APIView):
+class OrderCart(APIView):
     def get_object(self, pk):
         try:
             return User.objects.get(pk=pk)
@@ -113,6 +113,9 @@ class PurchaseCart(APIView):
         serializer = CartSerializer(cart, many=True)
         return Response(serializer.data)
 
+    def buy_item(self,item_id,cart_id,quantity):
+        cart_item = {'user_fk_id' : pk, 'cart_id' : 1}
+
     def set_currency(self, amount, pk):
         user = self.get_object(pk)
         serializer = UserSerializer(user, data=user)
@@ -121,15 +124,9 @@ class PurchaseCart(APIView):
 
     def post(self,request,pk,format=None):
         self.set_currency(request.data[0]['price'], pk)
-        #cart = cartObject(pk, 1)
-        cart = {'user_fk_id' : pk, 'cart_id' : 1}
+        order = {'user_fk_id' : pk, 'cart_id' : 1}
         serializer = CartSerializer(data=cart)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class PostOrderItems(APIView):
-    def post(self,request,pk,format=None):
-        
-        return Response()
