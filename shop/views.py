@@ -1,7 +1,10 @@
 from ast import For
 import datetime
-from shop.models import Cart, Item, User
-from shop.serializers import UserSerializer, ItemSerializer, CartSerializer
+
+from pymysql import NULL
+from shop import serializers
+from shop.models import Cart, Item, OrderItem, User, Order
+from shop.serializers import UserSerializer, ItemSerializer, OrderSerializer, OrderItemSerializer
 from django.http import Http404
 from django.db.models import Max
 from rest_framework.views import APIView
@@ -95,38 +98,60 @@ class ItemsOfUser(APIView):
         items.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#to allow creation of cart
-class cartObject:
-    def __init__(self, user_fk_id, cart_id):
-        self.user_fk_id = user_fk_id
-        self.cart_id = cart_id
 
 class OrderCart(APIView):
-    def get_object(self, pk):
+    def get_user(self, pk):
         try:
             return User.objects.get(pk=pk)
         except:
             raise Http404
 
     def get(self,request,pk,format=None):
-        cart = Cart.objects.all()
-        serializer = CartSerializer(cart, many=True)
+        order = Order.objects.all()
+        serializer = OrderSerializer(order, many=True)
         return Response(serializer.data)
 
-    def buy_item(self,item_id,cart_id,quantity):
-        cart_item = {'user_fk_id' : pk, 'cart_id' : 1}
+    def buy_item(self,item_id,order_id,quantity):
+        order_item = {'item_fk_id' : item_id, 'order_fk_id' : order_id, 'quantity' : quantity}
+        serializer = OrderItemSerializer(data=order_item)
+        if serializer.is_valid():
+            serializer.save()
 
-    def set_currency(self, amount, pk):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user, data=user)
+    def lower_currency(self, amount, pk):
+        user = self.get_user(pk)
+        user.currency -= amount
+        serializer = UserSerializer(data=user)
         if serializer.is_valid():
             serializer.save()
 
     def post(self,request,pk,format=None):
-        self.set_currency(request.data[0]['price'], pk)
-        order = {'user_fk_id' : pk, 'cart_id' : 1}
-        serializer = CartSerializer(data=cart)
+        new_order_id = Order.objects.aggregate(Max('order_id'))['order_id__max']+1 #highest id +1 to create next
+
+        cost = 0
+        for item in request.data:
+            cost += item['price'] * item['quantity']
+
+        buying_user = self.get_user(pk)
+        if cost > buying_user.currency:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        for item in request.data:
+            self.buy_item(item['item_id'], new_order_id, item['quantity'])
+        
+        self.lower_currency(cost, pk)
+        order = {'order_id' : new_order_id, 'user_fk_id' : pk}
+        serializer = OrderSerializer(data=order)
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#gets all items of all orders user has ordered
+class OrderItems(APIView):
+    def get(self,request,pk,format=None):
+        order = Order.objects.filter(user_fk_id=pk)
+        items = OrderItem.objects.none()
+        for x in order:
+            items |= OrderItem.objects.filter(order_fk_id=x.order_id)
+        serializer = OrderItemSerializer(items, many=True)
+        return Response(serializer.data)
