@@ -4,7 +4,7 @@ from urllib import response
 
 from pymysql import NULL
 from shop import serializers
-from shop.models import Cart, Item, OrderItem, User, Order
+from shop.models import Item, OrderItem, User, Order
 from shop.serializers import UserSerializer, ItemSerializer, OrderSerializer, OrderItemSerializer
 from django.http import Http404
 from django.db.models import Max
@@ -135,6 +135,7 @@ class OrderCart(APIView):
         serializer = UserSerializer(user, data=updated_user)
         if serializer.is_valid():
             serializer.save()
+        
 
     def post(self,request,pk,format=None):
         new_order_id = 0
@@ -147,15 +148,14 @@ class OrderCart(APIView):
         buying_user = self.get_user(pk)
         if cost > buying_user.currency: #if cost is greated then bad request
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        for item in request.data: #creates all cart items
-            self.buy_item(new_order_id, item['item_id'], item['quantity'])
         
         self.lower_currency(cost, pk) #lowers currency of user
         order = {'order_id' : new_order_id, 'user_fk_id' : pk}
         serializer = OrderSerializer(data=order)
         if serializer.is_valid():
             serializer.save()
+            for item in request.data: #creates all cart items
+                self.buy_item(new_order_id, item['item_id'], item['quantity'])
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
