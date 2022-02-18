@@ -7,6 +7,7 @@ import { Canvas } from '@react-three/fiber'
 import ItemForm from './Components/ItemForm';
 import axios from "axios";
 import FiberBackground from './Components/FiberBackground';
+import OrderHistory from './Components/OrderHistory';
 
 /* Working frontend shop application that sends information to the
 backend located on pythonanywhere.com using the selfmade Python Django Restframwork API
@@ -14,7 +15,7 @@ backend located on pythonanywhere.com using the selfmade Python Django Restframw
 */
 
 //the navigation bar at the top of the window
-function NavBar({ postCurrencyClick, selfItems, createItem, formClassName, user }) {
+function NavBar({ postCurrencyClick, selfItems, createItem, formClassName, user, orderHistPress }) {
   return (
     <div className='bg-gradient-to-r from-grey-100 to-blue-500 shadow-lg'>
       <ul className='flex h-16 w-screen justify-center items-center shadow-lg'>
@@ -24,7 +25,7 @@ function NavBar({ postCurrencyClick, selfItems, createItem, formClassName, user 
         <div className='flex items-center justify-center space-x-6'>
           <NavText buttonPressed={postCurrencyClick} text="Get Currency" />
           <CreateItem buttonPressed={createItem} formClassName={formClassName} user={user} />
-          <NavText buttonPressed={selfItems} text="Order History" />
+          <NavText buttonPressed={orderHistPress} text="Order History" />
           <NavText buttonPressed={selfItems} text="Your Items" />
         </div>
       </ul>
@@ -119,7 +120,7 @@ function App() {
     if (userItems ? setUserItems(false) : setUserItems(true));
   }
 
-  //gets all items, if selfItems boolean is on only gets user's items
+  //gets all items, if selfItems boolean is true only gets user's own items
   const [get, setGet] = React.useState(null);
   React.useEffect(() => {
     if (!userItems) {
@@ -199,6 +200,16 @@ function App() {
     cartToggled ? setcartToggled(false) : setcartToggled(true)
   }
 
+  const [orderHistActive, setOrderHistActive] = useState(false);
+
+  const orderHistPress = () => {
+    orderHistActive ? setOrderHistActive(false) : setOrderHistActive(true)
+  }
+  var orderHist = <OrderHistory orderHistActive={orderHistActive}></OrderHistory>
+  useEffect (() => {
+    orderHist = <OrderHistory orderHistActive={orderHistActive}></OrderHistory>
+  }, [orderHistPress])
+
   //the return of the entire app suspense is there for the 3d object(s) 
   return (
     <div className='h-screen w-screen font-sans text-black font-bold text-2xl bg-gray-800'>
@@ -219,9 +230,10 @@ function App() {
               {/* GetUser contains the user info and cart info */}
             </div>
             {items}{/* contains all items that should be shown */}
+            {orderHist}
           </div>
         </div>
-        <NavBar postCurrencyClick={postCurrencyClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName} user={user}></NavBar>{/* the navbar with all it's button presses */}
+        <NavBar orderHistPress={orderHistPress} postCurrencyClick={postCurrencyClick} selfItems={selfItems} createItem={createItem} formClassName={formClassName} user={user}></NavBar>{/* the navbar with all it's button presses */}
         <Footer />
       </Suspense>
     </div>
