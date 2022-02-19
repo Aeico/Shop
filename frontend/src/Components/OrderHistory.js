@@ -16,11 +16,9 @@ export function OrderHistory({orderHistActive}) {
   var count = 0;
   if (orderData != undefined) {
     var orderDataInside = orderData.map(
-      
-      item => item.item_fk_id + ", "
+      item =>"(item:"+ item.item_fk_id  +", quantity:"+ item.quantity +", order id:"+ item.order_fk_id + ") "
       );
   }
-
 
   return (
     <div>
