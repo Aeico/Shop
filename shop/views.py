@@ -118,7 +118,8 @@ class OrderCart(APIView):
         order_item = {
             'order_fk_id' : order_id,
             'item_fk_id' : item_id,
-            'quantity' : quantity }
+            'quantity' : quantity 
+            }
         serializer = OrderItemSerializer(data=order_item) #not working as of now
         if serializer.is_valid():
             serializer.save()
@@ -165,7 +166,13 @@ class OrderItems(APIView):
         order = Order.objects.filter(user_fk_id=pk)
         items = OrderItem.objects.none()
         for x in order:
-            items |= OrderItem.objects.filter(order_fk_id=x.order_id)
+            cur_items =  OrderItem.objects.filter(order_fk_id=x.order_id)
+            for item in cur_items:
+                if item.item_name == None:
+                    foreign_item = Item.objects.filter(item_id=item.item_fk_id_id)
+                    item.item_name = foreign_item[0].name
+                    item.save()
+            items |= cur_items
         serializer = OrderItemSerializer(items, many=True)
         return Response(serializer.data)
 

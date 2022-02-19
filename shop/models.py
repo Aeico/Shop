@@ -24,6 +24,7 @@ class OrderItem(models.Model):
     order_fk_id = models.ForeignKey(Order,null=False,on_delete=models.CASCADE)
     item_fk_id = models.ForeignKey(Item,null=False,on_delete=models.DO_NOTHING)
     quantity = models.IntegerField(default=1)
+    item_name = models.CharField(null=True,max_length=255)
 
 class Cart(models.Model):
     user_fk_id = models.ForeignKey(User,null=False,on_delete=models.CASCADE)
