@@ -13,16 +13,15 @@ export function OrderHistory({orderHistActive}) {
       });
   }, [orderHistActive])
 
-  var count = 0;
   if (orderData != undefined) {
     var orderDataInside = orderData.map(
-      item =>"(item:"+ item.item_fk_id  +", quantity:"+ item.quantity +", order id:"+ item.order_fk_id + ") "
+      item => item.item_name  +", amount:"+ item.quantity +"  "+ item.order_fk_id +'\n'
       );
   }
 
   return (
     <div>
-      <h1 className='mx-5'>here: {orderDataInside}</h1>
+      <p className='mx-5 text-base'>here: {orderDataInside}</p>
     </div>
   )
 }
