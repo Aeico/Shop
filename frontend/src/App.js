@@ -95,7 +95,7 @@ function App() {
     preWidth = 8
   }
   // + preWidth
-  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('grid grid-cols-5')
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('right-0 w-2/6 h-full grid grid-cols-5 relative')
 
   //recalculates grid of items when ran (runs from eventListener below) 
   const checkWindow = () => {
@@ -104,7 +104,7 @@ function App() {
       width = 8
     }
     var height = Math.round((window.innerHeight - 100) / 300)
-    setItemsWindowTailwind('h-fit w-6/6 grid grid-flow-row-dense grid-cols-' + width + ' grid-rows-' + height + ' justify-center')
+    setItemsWindowTailwind('right-0 h-fit w-5/6 grid grid-flow-row-dense grid-cols-' + width + ' grid-rows-' + height + ' justify-center')
   }
 
   //adds event listener to check resize onComponentMount(but as useEffect with empty checking array)
@@ -223,16 +223,14 @@ function App() {
         </Suspense>
       </div>
       <Suspense fallback={null}>
-
-        <div className='h-fit w-full mt-16 top-0 absolute flex items-center justify-center'>
-          <UserInfo getCur={getCur} className='h-fit w-1'
+        <div className='h-fit w-full mt-16 top-0 absolute flex'>
+          <UserInfo getCur={getCur} className='h-full w-1/6 relative left-0'
             cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} user={user} />
           <div className={itemsWindowTailwind}>{/* the resizing part of the window that contains cols and rows of items */}
             <div className='col-span-1 grid-rows-2'>
               {/* GetUser contains the user info and cart info */}
             </div>
             {items}{/* contains all items that should be shown */}
-
           </div>
           {orderHist}
         </div>
