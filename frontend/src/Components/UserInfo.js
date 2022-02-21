@@ -19,7 +19,7 @@ export function GetUser({ cartClicked, cartToggled, cartInfo, getCur, setCartInf
 
   if (!getCur) return <p>Loading</p>;
   return (
-    <div className='h-full w-full p-6 bg-inherit items-center text-3xl font-normal'>
+    <div className='left-0 h-full w-1/6 p-6 bg-inherit items-center text-3xl font-normal'>
       <p>Hello {getCur.name}!</p>
       <div className='pt-5 inline-flex items-center'>Your
         <div className='w-20 h-20 inline-flex pt-1'>
