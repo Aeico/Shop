@@ -9,7 +9,6 @@ export function OrderHistory({orderHistActive}) {
     axios.get("http://127.0.0.1:8000/boughtitems/" + user + "/")
       .then((res) => {
         setOrderData(res.data);
-        console.log(orderData)
       });
   }, [orderHistActive])
 

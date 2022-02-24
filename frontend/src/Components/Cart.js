@@ -48,11 +48,8 @@ export function Cart({ cartInfo, setCartInfo, user }) {
   },[cartInfo])
 
   const buyClicked = () => {
-    console.log(cartInfo)
-    console.log(user)
     axios.post("http://127.0.0.1:8000/buy/" + user +"/", cartInfo)
     .then(res => {
-      console.log(res.data)
     });
   }
 

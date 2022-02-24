@@ -97,7 +97,7 @@ function App() {
     preWidth = 8
   }
   // + preWidth
-  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('right-0 w-2/6 h-full grid grid-cols-5 relative')
+  const [itemsWindowTailwind, setItemsWindowTailwind] = useState('right-0 w-5/6 h-full grid grid-cols-5 relative')
 
   //recalculates grid of items when ran (runs from eventListener below) 
   const checkWindow = () => {
