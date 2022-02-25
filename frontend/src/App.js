@@ -223,12 +223,9 @@ function App() {
       </div>
       <Suspense fallback={null}>
         <div className='h-fit w-full mt-16 top-0 absolute flex'>
-          <UserInfo getCur={getCur} className='h-full w-1/6 relative left-0'
+          <UserInfo getCur={getCur} className='h-full w-1/6 relative left-0' /* UserInfo contains the user info and cart info */
             cartClicked={cartClicked} cartToggled={cartToggled} cartInfo={cartInfo} setCartInfo={setCartInfo} user={user} />
           <div className={itemsWindowTailwind}>{/* the resizing part of the window that contains cols and rows of items */}
-            <div className='col-span-1 grid-rows-2'>
-              {/* GetUser contains the user info and cart info */}
-            </div>
             {itemsBoolean ? items : orderHist}{/* contains all items that should be shown */}
           </div>
           
