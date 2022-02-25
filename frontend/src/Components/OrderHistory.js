@@ -19,8 +19,8 @@ export function OrderHistory({orderHistActive}) {
   }
 
   return (
-    <div>
-      <p className='mx-5 text-base'>here: {orderDataInside}</p>
+    <div className='col-span-5 row-span-auto'>
+      <p className='mx-5  text-base'>here: {orderDataInside}</p>
     </div>
   )
 }
