@@ -17,13 +17,23 @@ export function OrderHistory({orderHistActive}) {
   if (orderData !== undefined) {
     //order_id = orderData[0].order_fk_id;
     var orderDataInside = orderData.map(
-      item => item.item_name  +", amount:"+ item.quantity +"  "+ item.item_fk_id 
+      item => item.item_name  +" "+ item.quantity +" "+ item.item_fk_id 
       );
+  }
+
+  if (orderDataInside !== undefined) {
+    var newOrderData = [];
+    var count = 0;
+    orderDataInside.forEach(dataLine => {
+      newOrderData[count] = <div>{dataLine}</div>
+      count++;
+    });
+    console.log(newOrderData)
   }
 
   return (
     <div className='col-span-5 row-span-auto'>
-      <p className='mx-5  text-base'>Name     Quantity     Item id     Order:{order_id} {orderDataInside}</p>
+      <p className='mx-5  text-base'>Name     Quantity     Item id     Order:{order_id} {newOrderData}</p>
       
     </div>
   )
