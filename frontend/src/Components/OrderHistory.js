@@ -28,7 +28,6 @@ export function OrderHistory({orderHistActive}) {
       newOrderData[count] = <div>{dataLine}</div>
       count++;
     });
-    console.log(newOrderData)
   }
 
   return (
