@@ -55,10 +55,13 @@ export function Cart({ cartInfo, setCartInfo, user }) {
 
   var cartItems = cartInfo.map(item =>
     <div key={item.item_id}>
-      <h2>{item.name}</h2>
-      <div className='justify-center font-normal'>
-        <button onClick={(e) => lowerQuantity(item, e)}>-</button>{item.quantity}
+      {item.name}
+      <div className='text-lg justify-center flex font-lg font-bold'>
+        <div>
+        <button onClick={(e) => lowerQuantity(item, e)}>-</button>
+        {item.quantity}
         <button onClick={(e) => increaseQuantity(item, e)}>+</button>
+        </div>
         <button className='absolute right-0 mr-3' title={'Remove ' + item.name} onClick={(e) => remove(item, e)}>X</button></div>
     </div>)
   return (
