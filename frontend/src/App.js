@@ -188,7 +188,7 @@ function App() {
 
   //maps all items to the Component items to put on screen
   if (get) {
-    var items = get.map(item => <Items key={item.item_id} buyClicked={buyClicked} item_id={item.item_id} className='col-span-1 grid-rows-1'
+    var items = get.map(item => <Items key={item.item_id} buyClicked={buyClicked} item_id={item.item_id} className='col-span-1 row-span-1'
       name={item.name} description={item.description} price={item.price}>
     </Items>)
   }
