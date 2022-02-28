@@ -19,10 +19,10 @@ export function OrderHistory({ orderHistActive }) {
     var count = 0;
     orderData.forEach(data => {
       newOrderData[count] =
-        <div className='grid w-96 grid-cols-5'>
-          <p className='col-span-3'>{data.item_name}</p>
-          <p>{data.quantity}</p>
-          <p>{data.item_fk_id}</p>
+        <div className='grid w-96 grid-cols-5 '>
+          <p className='col-span-3 border-black border-2'>{data.item_name}</p>
+          <p className='border-black border-2'>{data.quantity}</p>
+          <p className='border-black border-2'>{data.item_fk_id}</p>
         </div>
       count++;
     });
@@ -31,9 +31,9 @@ export function OrderHistory({ orderHistActive }) {
   return (
     <div className='col-span-5 grid-cols-5 justify-center row-span-1 text-base '>
       <div className='col-span-5 grid w-96 grid-cols-5'>
-        <p className='mx-5 col-span-3'>Name</p>
-        <p className='mx-5 col-span-1'>Quantity</p>
-        <p className='mx-5 col-span-1'>Item id</p>
+        <p className='px-5 col-span-3 border-black border-2'>Name</p>
+        <p className='px-5 col-span-1 border-black border-2'>Quantity</p>
+        <p className='px-5 col-span-1 border-black border-2'>Item id</p>
       </div>
       <br></br>
       <p className='mx-5 col-span-1'>{order_id} {newOrderData}</p>
