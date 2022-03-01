@@ -31,12 +31,12 @@ export function OrderHistory({ orderHistActive }) {
   return (
     <div className='col-span-5 grid-cols-5 justify-center row-span-1 text-base '>
       <div className='col-span-5 grid w-96 grid-cols-5'>
-        <p className='px-5 col-span-3 border-black border-2'>Name</p>
-        <p className='px-5 col-span-1 border-black border-2'>Quantity</p>
-        <p className='px-5 col-span-1 border-black border-2'>Item id</p>
+        <p className='col-span-3 border-black border-2'>Name</p>
+        <p className='col-span-1 border-black border-2'>Quantity</p>
+        <p className='col-span-1 border-black border-2'>Item id</p>
       </div>
       <br></br>
-      <p className='mx-5 col-span-1'>{order_id} {newOrderData}</p>
+      <p className='col-span-1'>{order_id} {newOrderData}</p>
 
     </div>
 
