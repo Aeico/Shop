@@ -29,17 +29,17 @@ export function OrderHistory({ orderHistActive }) {
   }
 
   return (
-    <div className='col-span-5 grid-cols-5 justify-center row-span-1 text-base '>
-      <div className='col-span-5 grid w-96 grid-cols-5'>
-        <p className='col-span-3 border-black border-2'>Name</p>
-        <p className='col-span-1 border-black border-2'>Quantity</p>
-        <p className='col-span-1 border-black border-2'>Item id</p>
+    <div className='col-span-5 grid-cols-5 justify-center row-span-2 text-base absolute left-1/3'>
+      <div className='col-span-5 grid-cols-5 justify-center row-span-1 text-base '>
+        <div className='col-span-5 grid w-96 grid-cols-5'>
+          <p className='col-span-3 border-black border-2'>Name</p>
+          <p className='col-span-1 border-black border-2'>Quantity</p>
+          <p className='col-span-1 border-black border-2'>Item id</p>
+        </div>
+        <br></br>
+        <p className='col-span-1'>{order_id} {newOrderData}</p>
       </div>
-      <br></br>
-      <p className='col-span-1'>{order_id} {newOrderData}</p>
-
     </div>
-
   )
 }
 
