@@ -16,14 +16,30 @@ export function OrderHistory({ orderHistActive }) {
 
   if (orderData !== undefined) {
     var newOrderData = [];
+    var lastOrderId;
     var count = 0;
     orderData.forEach(data => {
-      newOrderData[count] =
-        <div className='grid w-96 grid-cols-5 '>
-          <p className='col-span-3 border-black border-2'>{data.item_name}</p>
-          <p className='border-black border-2'>{data.quantity}</p>
-          <p className='border-black border-2'>{data.item_fk_id}</p>
-        </div>
+      console.log(data)
+      if (data.order_fk_id !== lastOrderId) {
+        newOrderData[count] =
+          <div>
+            <br></br>
+            <p></p>
+            <div className='grid w-96 grid-cols-5 '>
+              <p className='col-span-3 border-black border-2'>{data.item_name}</p>
+              <p className='border-black border-2'>{data.quantity}</p>
+              <p className='border-black border-2'>{data.item_fk_id}</p>
+            </div>
+          </div>
+      } else {
+        newOrderData[count] =
+          <div className='grid w-96 grid-cols-5 '>
+            <p className='col-span-3 border-black border-2'>{data.item_name}</p>
+            <p className='border-black border-2'>{data.quantity}</p>
+            <p className='border-black border-2'>{data.item_fk_id}</p>
+          </div>
+      }
+      lastOrderId = data.order_fk_id;
       count++;
     });
   }
